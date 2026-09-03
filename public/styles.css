@@ -691,12 +691,12 @@ textarea#message-input:focus {
 
 /* Career Mentor Callout */
 .mentor-callout {
-  margin: 14px 12px 10px;
-  padding: 14px 18px;
-  background: rgba(0, 36, 26, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  margin: 16px 12px 12px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 2px solid #f97316;
   border-radius: 14px;
-  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22), 0 2px 12px rgba(249, 115, 22, 0.2);
 }
 
 .mentor-callout-content {
@@ -709,10 +709,10 @@ textarea#message-input:focus {
 
 .mentor-callout-text {
   margin: 0;
-  font-size: 13.5px;
+  font-size: 14px;
   line-height: 1.45;
-  color: #e3efe9;
-  font-weight: 600;
+  color: #062b1e;
+  font-weight: 700;
   flex: 1;
   min-width: 250px;
 }
@@ -720,26 +720,25 @@ textarea#message-input:focus {
 .mentor-callout-btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(255, 255, 255, 0.15);
+  gap: 7px;
+  background: #ea580c;
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  font-size: 13px;
-  font-weight: 700;
-  padding: 7px 16px;
-  border-radius: 20px;
+  border: none;
+  font-size: 13.5px;
+  font-weight: 800;
+  padding: 9px 20px;
+  border-radius: 22px;
   text-decoration: none;
   white-space: nowrap;
-  transition: all 0.15s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.18s ease;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
 }
 
 .mentor-callout-btn:hover {
-  background: #ffffff;
-  color: var(--green-darker);
-  border-color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.55);
 }
 
 .mentor-callout-btn:active {
