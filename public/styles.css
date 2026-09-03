@@ -689,6 +689,63 @@ textarea#message-input:focus {
   color: #b91c1c;
 }
 
+/* Career Mentor Callout */
+.mentor-callout {
+  margin: 14px 12px 10px;
+  padding: 14px 18px;
+  background: rgba(0, 36, 26, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 14px;
+  backdrop-filter: blur(8px);
+}
+
+.mentor-callout-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mentor-callout-text {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #e3efe9;
+  font-weight: 600;
+  flex: 1;
+  min-width: 250px;
+}
+
+.mentor-callout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.mentor-callout-btn:hover {
+  background: #ffffff;
+  color: var(--green-darker);
+  border-color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.25);
+}
+
+.mentor-callout-btn:active {
+  transform: translateY(0);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *:before, *:after {
     transition: none !important;
