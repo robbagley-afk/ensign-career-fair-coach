@@ -225,8 +225,11 @@ async function submitMessage(message) {
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Something went wrong.');
     addMessage('assistant', data.reply, data.response_id, lastUserMessage);
-    history.push({ role: 'assistant', content: data.reply });
-    status.textContent = data.live ? 'AI coaching live' : 'Helpful fallback';
+    if (data.live) {
+      status.textContent = data.engine === 'qwen' ? 'AI live (Qwen fallback)' : 'AI coaching live';
+    } else {
+      status.textContent = 'Career Fair Coach Python Engine';
+    }
   } catch (error) {
     addMessage('assistant', error.message || 'I hit a snag. Please try again.');
     status.textContent = 'Try again';

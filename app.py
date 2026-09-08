@@ -28,6 +28,9 @@ HOST = os.getenv("CAREER_FAIR_COACH_HOST", "127.0.0.1")
 PORT = _get_int_env("CAREER_FAIR_COACH_PORT", 5040)
 MODEL = os.getenv("CAREER_FAIR_COACH_GEMINI_MODEL", "gemini-2.5-flash")
 API_KEY = os.getenv("CAREER_FAIR_COACH_GEMINI_API_KEY", "").strip()
+LM_STUDIO_URL = os.getenv("LM_STUDIO_URL", "http://127.0.0.1:1234/v1").rstrip("/")
+LM_STUDIO_MODEL = os.getenv("LM_STUDIO_MODEL", "qwen3-vl-30b-a3b-instruct-mlx").strip()
+LM_STUDIO_API_KEY = os.getenv("LM_STUDIO_API_KEY", "").strip()
 
 if os.getenv("VERCEL"):
     DB_PATH = Path("/tmp") / "feedback.sqlite3"
@@ -127,64 +130,115 @@ FALLBACK_MAP = {
 }
 
 
-def fallback_reply(message: str, mode: str) -> str:
+def career_fair_coach_python_engine(message: str, mode: str) -> str:
+    """Deterministic offline fallback engine for Career Fair Coach."""
     return FALLBACK_MAP.get(mode, FALLBACK_MAP["pitch"])
 
 
-def ask_coach(message: str, mode: str, history: list[dict[str, str]]) -> tuple[str, bool]:
-    api_key = API_KEY.strip()
-    if not api_key:
-        return fallback_reply(message, mode), False
+fallback_reply = career_fair_coach_python_engine
 
+
+def query_qwen(message: str, mode: str, history: list[dict[str, str]]) -> str | None:
+    """Queries local or network LM Studio Qwen model for Career Fair coaching."""
     mode_context = f"Mode: {mode}. Keep focus on this preparation step."
     system_instruction = f"{SYSTEM_PROMPT}\n\n{mode_context}".strip()
 
-    contents = []
+    messages = [{"role": "system", "content": system_instruction}]
     for item in history[-8:]:
-        role = item.get("role")
+        role = item.get("role", "user")
         content = str(item.get("content", "")).strip()
-        if role == "user" and content:
-            contents.append({"role": "user", "parts": [{"text": content}]})
-        elif role == "assistant" and content:
-            contents.append({"role": "model", "parts": [{"text": content}]})
+        if role in ("user", "assistant") and content:
+            messages.append({"role": role, "content": content})
 
-    contents.append({"role": "user", "parts": [{"text": message}]})
+    messages.append({"role": "user", "content": message})
 
     payload = {
-        "systemInstruction": {"parts": [{"text": system_instruction}]},
-        "contents": contents,
-        "generationConfig": {
-            "temperature": 0.4,
-            "maxOutputTokens": 2048,
-        },
+        "model": LM_STUDIO_MODEL,
+        "messages": messages,
+        "temperature": 0.4,
+        "max_tokens": 1500,
     }
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent"
+    url = f"{LM_STUDIO_URL}/chat/completions"
     req_data = json.dumps(payload).encode("utf-8")
-    headers = {
-        "Content-Type": "application/json",
-        "x-goog-api-key": api_key,
-    }
+    headers = {"Content-Type": "application/json"}
+    if LM_STUDIO_API_KEY:
+        headers["Authorization"] = f"Bearer {LM_STUDIO_API_KEY}"
 
     req = Request(url, data=req_data, headers=headers, method="POST")
     try:
-        with urlopen(req, timeout=30, context=ssl.create_default_context()) as response:
-            body = json.loads(response.read().decode("utf-8"))
+        with urlopen(req, timeout=30, context=ssl.create_default_context()) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+        choices = data.get("choices", [])
+        if choices:
+            reply = choices[0].get("message", {}).get("content", "").strip()
+            if reply:
+                return reply.replace("**", "")
+    except Exception as e:
+        print(f"[Fallback Qwen Error] {e}")
+    return None
 
-        candidates = body.get("candidates", [])
-        if not candidates:
-            return fallback_reply(message, mode), False
-        parts = candidates[0].get("content", {}).get("parts", [])
-        if not parts:
-            return fallback_reply(message, mode), False
-        reply_text = parts[0].get("text", "").strip()
-        if not reply_text:
-            return fallback_reply(message, mode), False
 
-        reply_text = reply_text.replace("**", "")
-        return reply_text, True
-    except (URLError, HTTPError, TimeoutError, ValueError, KeyError, OSError):
-        return fallback_reply(message, mode), False
+def ask_coach(message: str, mode: str, history: list[dict[str, str]]) -> tuple[str, bool, str]:
+    """Tier 1: Google Gemini -> Tier 2: LM Studio Qwen -> Tier 3: Career Fair Coach Python Engine."""
+    # 1. Primary Engine: Google Gemini Cloud
+    api_key = API_KEY.strip()
+    if api_key:
+        mode_context = f"Mode: {mode}. Keep focus on this preparation step."
+        system_instruction = f"{SYSTEM_PROMPT}\n\n{mode_context}".strip()
+
+        contents = []
+        for item in history[-8:]:
+            role = item.get("role")
+            content = str(item.get("content", "")).strip()
+            if role == "user" and content:
+                contents.append({"role": "user", "parts": [{"text": content}]})
+            elif role == "assistant" and content:
+                contents.append({"role": "model", "parts": [{"text": content}]})
+
+        contents.append({"role": "user", "parts": [{"text": message}]})
+
+        payload = {
+            "systemInstruction": {"parts": [{"text": system_instruction}]},
+            "contents": contents,
+            "generationConfig": {
+                "temperature": 0.4,
+                "maxOutputTokens": 2048,
+            },
+        }
+
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generateContent"
+        req_data = json.dumps(payload).encode("utf-8")
+        headers = {
+            "Content-Type": "application/json",
+            "x-goog-api-key": api_key,
+        }
+
+        req = Request(url, data=req_data, headers=headers, method="POST")
+        try:
+            with urlopen(req, timeout=25, context=ssl.create_default_context()) as response:
+                body = json.loads(response.read().decode("utf-8"))
+
+            candidates = body.get("candidates", [])
+            if candidates:
+                parts = candidates[0].get("content", {}).get("parts", [])
+                if parts:
+                    reply_text = parts[0].get("text", "").strip()
+                    if reply_text:
+                        return reply_text.replace("**", ""), True, "gemini"
+        except (URLError, HTTPError, TimeoutError, ValueError, KeyError, OSError) as e:
+            print(f"[Primary Gemini Error] {e}")
+
+    # 2. Fallback Engine (Tier 2): LM Studio Qwen
+    try:
+        reply = query_qwen(message, mode, history)
+        if reply:
+            return reply, True, "qwen"
+    except Exception as e:
+        print(f"[Fallback Qwen Unavailable] {e}")
+
+    # 3. Final Fallback (Tier 3): Career Fair Coach Python Engine
+    return career_fair_coach_python_engine(message, mode), False, "python_engine"
 
 
 class CareerFairCoachHandler(SimpleHTTPRequestHandler):
@@ -197,6 +251,13 @@ class CareerFairCoachHandler(SimpleHTTPRequestHandler):
                 "status": "ok",
                 "service": "Career Fair Coach",
                 "app": "Ensign Career Fair Coach",
+                "primary_engine": "Google Gemini",
+                "primary_model": MODEL,
+                "primary_configured": bool(API_KEY),
+                "fallback_engine": "LM Studio Qwen",
+                "fallback_model": LM_STUDIO_MODEL,
+                "fallback_endpoint": LM_STUDIO_URL,
+                "offline_engine": "Career Fair Coach Python Engine",
                 "model": MODEL,
                 "live_configured": bool(API_KEY),
                 "rate_limit_per_min": RATE_LIMIT,
@@ -278,9 +339,9 @@ class CareerFairCoachHandler(SimpleHTTPRequestHandler):
             if not isinstance(history, list):
                 history = []
             mode = str(payload.get("mode", "pitch"))
-            answer, live = ask_coach(message, mode, history)
+            answer, live, engine = ask_coach(message, mode, history)
             response_id = f"resp-{uuid.uuid4().hex[:12]}"
-            self._json({"reply": answer, "live": live, "response_id": response_id})
+            self._json({"reply": answer, "live": live, "engine": engine, "response_id": response_id})
         except json.JSONDecodeError:
             self._json({"error": "I couldn’t read that message. Please try again."}, HTTPStatus.BAD_REQUEST)
         except Exception:

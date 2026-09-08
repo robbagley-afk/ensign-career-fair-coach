@@ -10,7 +10,11 @@ A mobile-first AI coach built specifically for Ensign College students preparing
   4. **Recruiter Questions**: High-impact questions to ask company reps.
 - **Privacy First**: Built-in guardrails block SSNs, credit cards, and credentials before reaching the model.
 - **Interactive Feedback**: Anonymous 👍 Helpful / 👎 Suggested Improvement feedback store.
-- **Dual Runtime**: Runs locally via `python3 app.py` and globally on Vercel Serverless Edge CDN.
+- **Dual Runtime & 3-Tier Architecture**:
+  1. Primary: Google Gemini (`gemini-2.5-flash`)
+  2. Fallback: LM Studio Qwen (`qwen3-vl-30b-a3b-instruct-mlx`)
+  3. Final Fallback: Career Fair Coach Python Engine (offline deterministic workshop guidance)
+  Runs locally via `python3 app.py` and globally on Vercel Serverless Edge CDN.
 
 ## 🚀 1-Click Vercel Deployment
 1. Import this repository in Vercel.
