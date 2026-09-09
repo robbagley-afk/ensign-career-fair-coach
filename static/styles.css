@@ -770,3 +770,41 @@ textarea#message-input:focus {
   }
 }
 
+/* Floating Admin Review Button (Bottom Right) */
+.admin-fab {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(7, 21, 16, 0.85);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  border-radius: 999px;
+  color: #a7f3d0;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.2s ease;
+  opacity: 0.82;
+}
+
+.admin-fab:hover {
+  opacity: 1;
+  background: rgba(14, 34, 25, 0.95);
+  border-color: #10b981;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+}
+
+.admin-fab:active {
+  transform: translateY(0);
+}
+
+

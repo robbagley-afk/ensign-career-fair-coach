@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Staff review panel for Ensign Career Fair Coach feedback.">
+  <title>Career Fair Coach Staff Admin</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23071510%22/><path d=%22M18 18h28v28H18z%22 fill=%22none%22 stroke=%22%2310b981%22 stroke-width=%224%22/><path d=%22M24 32h16M32 24v16%22 stroke=%22%23f59e0b%22 stroke-width=%224%22 stroke-linecap=%22round%22/></svg>">
+  <link rel="stylesheet" href="admin.css?v=cfc-1">
+  <!-- Vercel Web Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script>
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+</head>
+<body class="admin-body">
+  <main class="admin-shell">
+    <header class="admin-header">
+      <div class="title-group">
+        <div class="admin-nav">
+          <a class="nav-link" id="back-to-app" href="/">← Back to Career Fair Coach</a>
+          <a class="nav-link" id="back-to-dashboard" href="/">← Back to Dashboard</a>
+        </div>
+        <h1>Staff Admin</h1>
+        <p>Review student feedback, answer scores, and promote verified improvements into the coaching FAQ layer.</p>
+      </div>
+      <div class="admin-state" aria-label="Admin session status">
+        <span id="admin-state-dot" class="status-dot checking" aria-hidden="true"></span>
+        <span>
+          <strong>Admin access:</strong>
+          <span id="admin-state-label">Locked</span>
+        </span>
+      </div>
+    </header>
+
+    <!-- Login Panel -->
+    <section id="login-panel" class="admin-login" aria-labelledby="login-heading">
+      <div>
+        <h2 id="login-heading">Staff Sign In</h2>
+        <p>Enter the Career Fair Coach admin password. It remains securely in memory while this tab is open.</p>
+      </div>
+      <form id="login-form">
+        <label for="admin-password">Admin Password</label>
+        <div class="login-row">
+          <input id="admin-password" name="password" type="password" autocomplete="current-password" maxlength="256" required autofocus placeholder="Enter admin password">
+          <button class="primary-admin-btn" type="submit">Sign In</button>
+        </div>
+      </form>
+      <p id="login-status" class="admin-live-status" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- Workspace Panel (Shown when authenticated) -->
+    <section id="admin-panel" class="admin-workspace" hidden aria-label="Feedback Administration">
+      <div class="admin-toolbar">
+        <p>Review thumbs up/down ratings, student comments, and suggested corrections. Approved items improve future guidance.</p>
+        <div class="admin-toolbar-actions">
+          <button id="refresh-button" class="secondary-admin-btn" type="button">Refresh</button>
+          <button id="logout-button" class="secondary-admin-btn" type="button">Log Out</button>
+        </div>
+      </div>
+
+      <!-- Score Summary -->
+      <section class="score-grid" aria-label="Feedback Summary Scores">
+        <article class="score-card score-primary">
+          <span>Helpful Score</span>
+          <strong id="score-percent">No ratings</strong>
+        </article>
+        <article class="score-card">
+          <span>Total Ratings</span>
+          <strong id="score-total">0</strong>
+        </article>
+        <article class="score-card">
+          <span>Helpful (Up)</span>
+          <strong id="score-up">0</strong>
+        </article>
+        <article class="score-card">
+          <span>Needs Work (Down)</span>
+          <strong id="score-down">0</strong>
+        </article>
+        <article class="score-card">
+          <span>Pending Review</span>
+          <strong id="score-pending">0</strong>
+        </article>
+        <article class="score-card">
+          <span>Active FAQs</span>
+          <strong id="score-faqs">0</strong>
+        </article>
+      </section>
+
+      <p id="admin-status" class="admin-live-status" role="status" aria-live="polite"></p>
+
+      <!-- Feedback List -->
+      <section class="review-section" aria-labelledby="feedback-heading">
+        <div class="section-heading">
+          <h2 id="feedback-heading">Submitted Feedback</h2>
+          <p>Student ratings and submitted comments/corrections from the chat interface.</p>
+        </div>
+        <div id="feedback-list" class="review-list"></div>
+      </section>
+
+      <!-- Active FAQ Layer -->
+      <section class="review-section" aria-labelledby="faq-heading">
+        <div class="section-heading">
+          <h2 id="faq-heading">Approved FAQ Layer</h2>
+          <p>Staff-approved clarifications and FAQs included in coaching context.</p>
+        </div>
+        <div id="faq-list" class="review-list"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="admin.js?v=cfc-1"></script>
+</body>
+</html>

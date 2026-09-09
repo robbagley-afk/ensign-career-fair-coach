@@ -32,6 +32,10 @@ RATE_LIMIT = _get_int_env("RATE_LIMIT_PER_MIN", _get_int_env("CAREER_FAIR_COACH_
 
 DB_PATH = Path("/tmp") / "career_fair_feedback.sqlite3"
 
+def get_admin_password() -> str:
+    env_pass = os.environ.get("CAREER_FAIR_ADMIN_PASSWORD", "").strip()
+    return env_pass if env_pass else "Sistergroom2026"
+
 # ==============================================================================
 # 2. FEEDBACK DATABASE
 # ==============================================================================
@@ -49,14 +53,37 @@ def init_feedback_db():
                     question TEXT,
                     answer TEXT,
                     comment TEXT,
-                    client_ip TEXT
+                    client_ip TEXT,
+                    review_status TEXT DEFAULT 'pending'
                 )
             """)
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS approved_faqs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    question TEXT NOT NULL,
+                    answer TEXT NOT NULL,
+                    active INTEGER NOT NULL DEFAULT 1,
+                    created_at TEXT NOT NULL,
+                    updated_at TEXT NOT NULL
+                )
+            """)
+            cols = [row[1] for row in conn.execute("PRAGMA table_info(feedback)").fetchall()]
+            if "review_status" not in cols:
+                conn.execute("ALTER TABLE feedback ADD COLUMN review_status TEXT DEFAULT 'pending'")
             conn.commit()
     except Exception as e:
         print(f"[Feedback DB Init Error] {e}")
 
 init_feedback_db()
+
+def get_approved_faqs() -> list[dict]:
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            conn.row_factory = sqlite3.Row
+            rows = conn.execute("SELECT id, question, answer FROM approved_faqs WHERE active = 1").fetchall()
+            return [dict(r) for r in rows]
+    except Exception:
+        return []
 
 def save_feedback(response_id: str, rating: str, comment: str = "", question: str = "", answer: str = "", mode: str = "", client_ip: str = ""):
     now = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
@@ -239,8 +266,14 @@ class handler(BaseHTTPRequestHandler):
             or f"/{target}" in forwarded
         )
 
+    def _is_admin_authorized(self) -> bool:
+        provided = self.headers.get("X-CareerFair-Admin", "").strip()
+        expected = get_admin_password()
+        return bool(provided and provided == expected)
+
     def do_GET(self):
-        if self._match_action("status") or self._match_action("healthz") or "index.py" in self.path:
+        clean_path = self.path.split("?")[0].rstrip("/")
+        if self._match_action("status") or self._match_action("healthz") or clean_path in ("/healthz", "/api/status") or "index.py" in self.path:
             self._json({
                 "status": "ok",
                 "service": "Ensign Career Fair Coach (Vercel Serverless)",
@@ -250,9 +283,137 @@ class handler(BaseHTTPRequestHandler):
                 "rate_limit_per_min": RATE_LIMIT,
             })
             return
+
+        # ----------------------------------------------------------------------
+        # Admin GET Endpoints
+        # ----------------------------------------------------------------------
+        if self._match_action("admin/summary") or clean_path == "/api/admin/summary":
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                with sqlite3.connect(DB_PATH) as conn:
+                    total = conn.execute("SELECT count(*) FROM feedback").fetchone()[0]
+                    up = conn.execute("SELECT count(*) FROM feedback WHERE rating = 'up'").fetchone()[0]
+                    down = conn.execute("SELECT count(*) FROM feedback WHERE rating = 'down'").fetchone()[0]
+                    pending = conn.execute("SELECT count(*) FROM feedback WHERE rating = 'down' AND (review_status = 'pending' OR review_status IS NULL)").fetchone()[0]
+                    active_faqs = conn.execute("SELECT count(*) FROM approved_faqs WHERE active = 1").fetchone()[0]
+                self._json({
+                    "total": total,
+                    "up": up,
+                    "down": down,
+                    "pending": pending,
+                    "active_faqs": active_faqs,
+                })
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if self._match_action("admin/feedback") or clean_path == "/api/admin/feedback":
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.row_factory = sqlite3.Row
+                    rows = conn.execute("SELECT * FROM feedback ORDER BY id DESC LIMIT 100").fetchall()
+                    items = [dict(r) for r in rows]
+                self._json({"feedback": items})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if self._match_action("admin/faqs") or clean_path == "/api/admin/faqs":
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.row_factory = sqlite3.Row
+                    rows = conn.execute("SELECT * FROM approved_faqs ORDER BY id DESC").fetchall()
+                    items = [dict(r) for r in rows]
+                self._json({"faqs": items})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
         self.send_error(HTTPStatus.NOT_FOUND, "Not found.")
 
     def do_POST(self):
+        clean_path = self.path.split("?")[0].rstrip("/")
+
+        # ----------------------------------------------------------------------
+        # Admin POST Endpoints
+        # ----------------------------------------------------------------------
+        if self._match_action("admin/login") or clean_path == "/api/admin/login":
+            try:
+                content_length = int(self.headers.get("Content-Length", "0"))
+                data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                password = str(data.get("password", "")).strip()
+            except Exception:
+                self._json({"error": "Invalid JSON."}, HTTPStatus.BAD_REQUEST)
+                return
+            if password == get_admin_password():
+                self._json({"authenticated": True})
+            else:
+                self._json({"error": "Invalid admin password."}, HTTPStatus.UNAUTHORIZED)
+            return
+
+        if "/api/admin/feedback/" in clean_path and clean_path.endswith("/approve"):
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                parts = clean_path.split("/")
+                feedback_id = int(parts[parts.index("feedback") + 1])
+                content_length = int(self.headers.get("Content-Length", "0"))
+                data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                question = str(data.get("question", "")).strip()
+                answer = str(data.get("answer", "")).strip()
+                now = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.execute("""
+                        INSERT INTO approved_faqs (question, answer, active, created_at, updated_at)
+                        VALUES (?, ?, 1, ?, ?)
+                    """, (question, answer, now, now))
+                    conn.execute("UPDATE feedback SET review_status = 'approved' WHERE id = ?", (feedback_id,))
+                    conn.commit()
+                self._json({"status": "ok", "message": "Feedback approved as FAQ."})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if "/api/admin/feedback/" in clean_path and clean_path.endswith("/reject"):
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                parts = clean_path.split("/")
+                feedback_id = int(parts[parts.index("feedback") + 1])
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.execute("UPDATE feedback SET review_status = 'rejected' WHERE id = ?", (feedback_id,))
+                    conn.commit()
+                self._json({"status": "ok", "message": "Feedback rejected."})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if "/api/admin/faqs/" in clean_path and clean_path.endswith("/deactivate"):
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                parts = clean_path.split("/")
+                faq_id = int(parts[parts.index("faqs") + 1])
+                now = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.execute("UPDATE approved_faqs SET active = 0, updated_at = ? WHERE id = ?", (now, faq_id))
+                    conn.commit()
+                self._json({"status": "ok", "message": "FAQ deactivated."})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
         # ----------------------------------------------------------------------
         # Feedback Submission Endpoint
         # ----------------------------------------------------------------------

@@ -34,10 +34,23 @@ LM_STUDIO_API_KEY = os.getenv("LM_STUDIO_API_KEY", "").strip()
 
 if os.getenv("VERCEL"):
     DB_PATH = Path("/tmp") / "feedback.sqlite3"
+    ADMIN_PASS_FILE = Path("/tmp") / "admin-password"
 else:
     DATA_DIR = Path.home() / "Library" / "Application Support" / "Career Fair Coach"
     DATA_DIR.mkdir(parents=True, exist_ok=True, mode=0o700)
     DB_PATH = DATA_DIR / "feedback.sqlite3"
+    ADMIN_PASS_FILE = DATA_DIR / "admin-password"
+
+def get_admin_password() -> str:
+    env_pass = os.getenv("CAREER_FAIR_ADMIN_PASSWORD", "").strip()
+    if env_pass:
+        return env_pass
+    if ADMIN_PASS_FILE.exists():
+        try:
+            return ADMIN_PASS_FILE.read_text(encoding="utf-8").strip()
+        except Exception:
+            pass
+    return "Sistergroom2026"
 
 def init_feedback_db():
     try:
@@ -52,9 +65,24 @@ def init_feedback_db():
                     question TEXT,
                     answer TEXT,
                     comment TEXT,
-                    client_ip TEXT
+                    client_ip TEXT,
+                    review_status TEXT DEFAULT 'pending'
                 )
             """)
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS approved_faqs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    question TEXT NOT NULL,
+                    answer TEXT NOT NULL,
+                    active INTEGER NOT NULL DEFAULT 1,
+                    created_at TEXT NOT NULL,
+                    updated_at TEXT NOT NULL
+                )
+            """)
+            # Migration check for review_status
+            cols = [row[1] for row in conn.execute("PRAGMA table_info(feedback)").fetchall()]
+            if "review_status" not in cols:
+                conn.execute("ALTER TABLE feedback ADD COLUMN review_status TEXT DEFAULT 'pending'")
             conn.commit()
     except Exception as e:
         print(f"[Feedback DB Init Error] {e}")
@@ -63,12 +91,22 @@ init_feedback_db()
 
 def save_feedback(response_id: str, rating: str, comment: str = "", question: str = "", answer: str = "", mode: str = "", client_ip: str = ""):
     now = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
+    review_status = "not_required" if rating == "up" else "pending"
     with sqlite3.connect(DB_PATH) as conn:
         conn.execute("""
-            INSERT INTO feedback (created_at, response_id, mode, rating, question, answer, comment, client_ip)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        """, (now, response_id, mode, rating, question, answer, comment, client_ip))
+            INSERT INTO feedback (created_at, response_id, mode, rating, question, answer, comment, client_ip, review_status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """, (now, response_id, mode, rating, question, answer, comment, client_ip, review_status))
         conn.commit()
+
+def get_approved_faqs() -> list[dict]:
+    try:
+        with sqlite3.connect(DB_PATH) as conn:
+            conn.row_factory = sqlite3.Row
+            rows = conn.execute("SELECT id, question, answer FROM approved_faqs WHERE active = 1").fetchall()
+            return [dict(r) for r in rows]
+    except Exception:
+        return []
 
 
 SYSTEM_PROMPT = """You are Ensign College's Career Fair Coach. Help students prepare for a career fair.
@@ -189,7 +227,12 @@ def ask_coach(message: str, mode: str, history: list[dict[str, str]]) -> tuple[s
     api_key = API_KEY.strip()
     if api_key:
         mode_context = f"Mode: {mode}. Keep focus on this preparation step."
-        system_instruction = f"{SYSTEM_PROMPT}\n\n{mode_context}".strip()
+        faqs = get_approved_faqs()
+        faq_text = ""
+        if faqs:
+            faq_blocks = [f"Q: {f['question']}\nA: {f['answer']}" for f in faqs]
+            faq_text = "\n\nAPPROVED FAQ CLARIFICATIONS:\n" + "\n\n".join(faq_blocks)
+        system_instruction = f"{SYSTEM_PROMPT}{faq_text}\n\n{mode_context}".strip()
 
         contents = []
         for item in history[-8:]:
@@ -249,8 +292,14 @@ class CareerFairCoachHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(STATIC), **kwargs)
 
+    def _is_admin_authorized(self) -> bool:
+        provided = self.headers.get("X-CareerFair-Admin", "").strip()
+        expected = get_admin_password()
+        return bool(provided and provided == expected)
+
     def do_GET(self):
-        if self.path in ("/healthz", "/api/status"):
+        clean_path = self.path.split("?")[0].rstrip("/")
+        if clean_path in ("/healthz", "/api/status"):
             self._json({
                 "status": "ok",
                 "service": "Career Fair Coach",
@@ -267,13 +316,144 @@ class CareerFairCoachHandler(SimpleHTTPRequestHandler):
                 "rate_limit_per_min": RATE_LIMIT,
             })
             return
+
+        # ----------------------------------------------------------------------
+        # Admin GET Endpoints
+        # ----------------------------------------------------------------------
+        if clean_path == "/api/admin/summary":
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                with sqlite3.connect(DB_PATH) as conn:
+                    total = conn.execute("SELECT count(*) FROM feedback").fetchone()[0]
+                    up = conn.execute("SELECT count(*) FROM feedback WHERE rating = 'up'").fetchone()[0]
+                    down = conn.execute("SELECT count(*) FROM feedback WHERE rating = 'down'").fetchone()[0]
+                    pending = conn.execute("SELECT count(*) FROM feedback WHERE rating = 'down' AND (review_status = 'pending' OR review_status IS NULL)").fetchone()[0]
+                    active_faqs = conn.execute("SELECT count(*) FROM approved_faqs WHERE active = 1").fetchone()[0]
+                self._json({
+                    "total": total,
+                    "up": up,
+                    "down": down,
+                    "pending": pending,
+                    "active_faqs": active_faqs,
+                })
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if clean_path == "/api/admin/feedback":
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.row_factory = sqlite3.Row
+                    rows = conn.execute("SELECT * FROM feedback ORDER BY id DESC LIMIT 100").fetchall()
+                    items = [dict(r) for r in rows]
+                self._json({"feedback": items})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if clean_path == "/api/admin/faqs":
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.row_factory = sqlite3.Row
+                    rows = conn.execute("SELECT * FROM approved_faqs ORDER BY id DESC").fetchall()
+                    items = [dict(r) for r in rows]
+                self._json({"faqs": items})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
         super().do_GET()
 
     def do_POST(self):
+        clean_path = self.path.split("?")[0].rstrip("/")
+
+        # ----------------------------------------------------------------------
+        # Admin POST Endpoints
+        # ----------------------------------------------------------------------
+        if clean_path == "/api/admin/login":
+            try:
+                content_length = int(self.headers.get("Content-Length", "0"))
+                data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                password = str(data.get("password", "")).strip()
+            except Exception:
+                self._json({"error": "Invalid JSON."}, HTTPStatus.BAD_REQUEST)
+                return
+            if password == get_admin_password():
+                self._json({"authenticated": True})
+            else:
+                self._json({"error": "Invalid admin password."}, HTTPStatus.UNAUTHORIZED)
+            return
+
+        if clean_path.startswith("/api/admin/feedback/") and clean_path.endswith("/approve"):
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                parts = clean_path.split("/")
+                feedback_id = int(parts[4])
+                content_length = int(self.headers.get("Content-Length", "0"))
+                data = json.loads(self.rfile.read(content_length).decode("utf-8"))
+                question = str(data.get("question", "")).strip()
+                answer = str(data.get("answer", "")).strip()
+                if not question or not answer:
+                    self._json({"error": "Question and answer are required."}, HTTPStatus.BAD_REQUEST)
+                    return
+                now = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.execute("""
+                        INSERT INTO approved_faqs (question, answer, active, created_at, updated_at)
+                        VALUES (?, ?, 1, ?, ?)
+                    """, (question, answer, now, now))
+                    conn.execute("UPDATE feedback SET review_status = 'approved' WHERE id = ?", (feedback_id,))
+                    conn.commit()
+                self._json({"status": "ok", "message": "Feedback approved as FAQ."})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if clean_path.startswith("/api/admin/feedback/") and clean_path.endswith("/reject"):
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                parts = clean_path.split("/")
+                feedback_id = int(parts[4])
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.execute("UPDATE feedback SET review_status = 'rejected' WHERE id = ?", (feedback_id,))
+                    conn.commit()
+                self._json({"status": "ok", "message": "Feedback rejected."})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
+        if clean_path.startswith("/api/admin/faqs/") and clean_path.endswith("/deactivate"):
+            if not self._is_admin_authorized():
+                self._json({"error": "Admin access required."}, HTTPStatus.UNAUTHORIZED)
+                return
+            try:
+                parts = clean_path.split("/")
+                faq_id = int(parts[4])
+                now = time.strftime("%Y-%m-%d %H:%M:%S UTC", time.gmtime())
+                with sqlite3.connect(DB_PATH) as conn:
+                    conn.execute("UPDATE approved_faqs SET active = 0, updated_at = ? WHERE id = ?", (now, faq_id))
+                    conn.commit()
+                self._json({"status": "ok", "message": "FAQ deactivated."})
+            except Exception as e:
+                self._json({"error": str(e)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+
         # ----------------------------------------------------------------------
         # Feedback Submission Endpoint
         # ----------------------------------------------------------------------
-        if self.path == "/api/feedback":
+        if clean_path == "/api/feedback":
             try:
                 content_length = int(self.headers.get("Content-Length", "0"))
                 raw_body = self.rfile.read(content_length).decode("utf-8")
@@ -311,7 +491,7 @@ class CareerFairCoachHandler(SimpleHTTPRequestHandler):
         # ----------------------------------------------------------------------
         # Chat Endpoint
         # ----------------------------------------------------------------------
-        if self.path != "/api/chat":
+        if clean_path != "/api/chat":
             self.send_error(HTTPStatus.NOT_FOUND)
             return
 

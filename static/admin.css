@@ -1,0 +1,426 @@
+/* Admin styling for Ensign Career Fair Coach */
+:root {
+  --admin-bg: #071510;
+  --admin-surface: rgba(14, 34, 25, 0.88);
+  --admin-surface-soft: rgba(22, 48, 36, 0.9);
+  --admin-line: rgba(74, 222, 128, 0.18);
+  --admin-line-strong: rgba(74, 222, 128, 0.35);
+  --admin-text: #ecfdf5;
+  --admin-muted: #94a3b8;
+  --admin-green: #10b981;
+  --admin-gold: #f59e0b;
+  --admin-red: #f43f5e;
+}
+
+body.admin-body {
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  padding: 24px 16px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.admin-shell {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--admin-line);
+}
+
+.admin-nav {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.nav-link {
+  color: var(--admin-green);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+.admin-header h1 {
+  margin: 4px 0 6px;
+  font-size: 26px;
+  color: #ffffff;
+}
+
+.admin-header p {
+  margin: 0;
+  font-size: 13.5px;
+  color: var(--admin-muted);
+}
+
+.admin-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--admin-surface);
+  border: 1px solid var(--admin-line);
+  border-radius: 999px;
+  font-size: 12.5px;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.checking { background: #eab308; }
+.status-dot.online { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+
+.admin-login,
+.admin-toolbar,
+.review-section {
+  border: 1px solid var(--admin-line);
+  border-radius: 16px;
+  background: var(--admin-surface);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+}
+
+.admin-login {
+  max-width: 480px;
+  margin: 48px auto;
+  padding: 28px;
+}
+
+.admin-login h2,
+.review-section h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.admin-login p,
+.section-heading p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--admin-muted);
+  line-height: 1.5;
+}
+
+.admin-login form {
+  margin-top: 20px;
+}
+
+.admin-login label,
+.review-form label {
+  display: block;
+  margin-bottom: 6px;
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.login-row {
+  display: flex;
+  gap: 10px;
+}
+
+.admin-login input,
+.review-form input,
+.review-form select,
+.review-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--admin-line-strong);
+  border-radius: 8px;
+  color: var(--admin-text);
+  background: rgba(0, 0, 0, 0.25);
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.admin-login input:focus,
+.review-form input:focus,
+.review-form select:focus,
+.review-form textarea:focus {
+  border-color: var(--admin-green);
+  outline: 2px solid rgba(16, 185, 129, 0.25);
+}
+
+.primary-admin-btn,
+.secondary-admin-btn,
+.danger-admin-btn {
+  min-height: 38px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.primary-admin-btn {
+  border: none;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: #042f1f;
+  font-weight: 800;
+}
+
+.primary-admin-btn:hover:not(:disabled) {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.secondary-admin-btn {
+  border: 1px solid var(--admin-line);
+  background: var(--admin-surface-soft);
+  color: #e2e8f0;
+}
+
+.secondary-admin-btn:hover:not(:disabled) {
+  border-color: var(--admin-line-strong);
+  background: rgba(30, 64, 48, 0.95);
+}
+
+.danger-admin-btn {
+  border: 1px solid rgba(244, 63, 94, 0.35);
+  background: rgba(244, 63, 94, 0.15);
+  color: #fecdd3;
+}
+
+.danger-admin-btn:hover:not(:disabled) {
+  background: rgba(244, 63, 94, 0.25);
+}
+
+.primary-admin-btn:disabled,
+.secondary-admin-btn:disabled,
+.danger-admin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.admin-workspace {
+  margin-top: 16px;
+}
+
+.admin-workspace[hidden],
+.admin-login[hidden] {
+  display: none !important;
+}
+
+.admin-toolbar {
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-toolbar > p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--admin-muted);
+}
+
+.admin-toolbar-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.score-grid {
+  margin-top: 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+
+.score-card {
+  padding: 14px 16px;
+  border: 1px solid var(--admin-line);
+  border-radius: 12px;
+  background: rgba(16, 38, 28, 0.75);
+}
+
+.score-card span {
+  display: block;
+  font-size: 11.5px;
+  color: var(--admin-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.score-card strong {
+  display: block;
+  margin-top: 6px;
+  font-size: 24px;
+  color: #ffffff;
+}
+
+.score-card.score-primary strong {
+  color: var(--admin-gold);
+}
+
+.admin-live-status {
+  min-height: 1.25rem;
+  margin: 12px 0 0;
+  font-size: 13px;
+  color: var(--admin-muted);
+}
+
+.admin-live-status.success { color: #6ee7b7; font-weight: 600; }
+.admin-live-status.error { color: #fca5a5; font-weight: 600; }
+
+.review-section {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.section-heading {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--admin-line);
+}
+
+.review-list {
+  display: grid;
+  gap: 14px;
+  padding-top: 16px;
+}
+
+.empty-review {
+  margin: 0;
+  padding: 20px;
+  border: 1px dashed var(--admin-line-strong);
+  border-radius: 10px;
+  color: var(--admin-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.review-item {
+  padding: 16px;
+  border: 1px solid var(--admin-line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.review-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.review-kicker {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.review-meta {
+  margin: 4px 0 0;
+  font-size: 11.5px;
+  color: var(--admin-muted);
+}
+
+.review-status-badge {
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.review-status-badge.positive {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+}
+
+.review-status-badge.pending {
+  background: rgba(245, 158, 11, 0.2);
+  color: #fcd34d;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.review-status-badge.approved {
+  background: rgba(59, 130, 246, 0.2);
+  color: #93c5fd;
+  border: 1px solid rgba(59, 130, 246, 0.35);
+}
+
+.review-status-badge.rejected {
+  background: rgba(244, 63, 94, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(244, 63, 94, 0.35);
+}
+
+.review-fields {
+  margin: 12px 0 0;
+  display: grid;
+  gap: 6px;
+}
+
+.review-fields dt {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--admin-muted);
+  text-transform: uppercase;
+}
+
+.review-fields dd {
+  margin: 0 0 8px;
+  font-size: 13px;
+  color: #e2e8f0;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 10px;
+  border-radius: 6px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.review-form {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.review-form textarea[readonly] {
+  background: rgba(0, 0, 0, 0.35);
+  color: #94a3b8;
+}
+
+.review-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.review-copy {
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
