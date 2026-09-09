@@ -516,7 +516,7 @@ async function uploadVoiceForTranscription(audioBlob) {
     btnVoiceSend.disabled = false;
     micStatusLabel.textContent = 'Ready';
     voiceStatusText.className = 'voice-status-text';
-    voiceStatusText.textContent = '✓ Transcribed! Review your text in the box below, edit if needed, or click "Send Pitch to Coach".';
+    voiceStatusText.textContent = '✓ Transcribed! Your pitch is in the "Chat Here" box below. Edit if needed, then click either Send button.';
   } catch (err) {
     console.error('Transcription error:', err);
     micStatusLabel.textContent = 'Transcribe Failed';
