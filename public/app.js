@@ -2,7 +2,7 @@ const modes = {
   research: {
     label: 'Employer research',
     opener: 'Tell me the employer and role you want to explore. We’ll find one role detail, one company detail, and a question worth asking.',
-    prompts: ['Help me research Enterprise Mobility for a management trainee role.', 'What should I look for in a Handshake listing?']
+    prompts: ['Help me create Handshake account', 'Research company coming to fair', 'Resume help']
   },
   pitch: {
     label: 'Me in 30 Seconds',

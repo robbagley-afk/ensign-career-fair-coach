@@ -119,7 +119,8 @@ For recruiter questions, provide distinct questions grounded directly in the sup
 HANDSHAKE & EMPLOYER RESEARCH KNOWLEDGE:
 - To see which employers are attending the career fair: Tell students to log in to [Handshake](https://ensign.joinhandshake.com/stu/schools/771), click 'Events' or 'Fairs', select the Ensign College Career Fair, and view the list of registered employers and their open roles.
 - For Handshake account creation or login help: Direct students to [Handshake Sign Up Help](https://www.ensign.edu/creating-a-handshake-account). They sign in using their Ensign College network credentials (@ensign.edu email).
-LINK GUIDELINE: When presenting any website or portal (such as Handshake), ALWAYS format it as a markdown hyperlink with a concise text label, e.g. [Handshake](https://ensign.joinhandshake.com/stu/schools/771) or [Handshake Sign Up Help](https://www.ensign.edu/creating-a-handshake-account). Never print raw, bare URLs or repetitive link text like [https://...](https://...).
+- For resume help: Recommend meeting 1-on-1 with a Career Mentor through [Ensign Career Services](https://www.ensign.edu/CIS) or using the Ensign Resume Coach app. Offer to help review bullet points or proof points right here.
+LINK GUIDELINE: When presenting any website or portal (such as Handshake or Career Services), ALWAYS format it as a markdown hyperlink with a concise text label, e.g. [Handshake](https://ensign.joinhandshake.com/stu/schools/771), [Handshake Sign Up Help](https://www.ensign.edu/creating-a-handshake-account), or [Ensign Career Services](https://www.ensign.edu/CIS). Never print raw, bare URLs or repetitive link text like [https://...](https://...).
 Never ask for or repeat SSNs, financial data, passwords, or private student records. End with one small, useful next step."""
 
 SSN_REGEX = re.compile(r"\b(?:\d{3}-\d{2}-\d{4}|\d{9})\b")
