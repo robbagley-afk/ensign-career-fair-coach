@@ -159,12 +159,154 @@ function addFeedbackControls(messageArticle, responseId, questionText, answerTex
   });
 }
 
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function formatInlineMarkdown(escapedText) {
+  let str = escapedText;
+  str = str.replace(/\*\*([^*]+?)\*\*/g, '<strong>$1</strong>');
+  str = str.replace(/__([^_]+?)__/g, '<strong>$1</strong>');
+  str = str.replace(/(?<![*\w])\*([^*]+?)\*(?![*\w])/g, '<em>$1</em>');
+  str = str.replace(/(?<![_\w])_([^_]+?)_(?![_\w])/g, '<em>$1</em>');
+  return str;
+}
+
+const KNOWN_LINK_MAP = [
+  {
+    regex: /https?:\/\/ensign\.joinhandshake\.com\/login\/?/i,
+    label: 'Handshake'
+  },
+  {
+    regex: /https?:\/\/www\.ensign\.edu\/creating-a-handshake-account\/?/i,
+    label: 'Handshake Sign Up'
+  },
+  {
+    regex: /https?:\/\/ensign\.joinhandshake\.com\/stu\/schools\/771\/?/i,
+    label: 'Handshake'
+  },
+  {
+    regex: /https?:\/\/ensign\.joinhandshake\.com[^\s<"]*/i,
+    label: 'Handshake'
+  },
+  {
+    regex: /https?:\/\/app\.joinhandshake\.com[^\s<"]*/i,
+    label: 'Handshake'
+  }
+];
+
+function formatMessageLinks(container) {
+  const elements = Array.from(container.querySelectorAll('p, li, div'));
+  for (let i = 0; i < elements.length; i++) {
+    const el = elements[i];
+    let html = el.innerHTML;
+
+    // 1. Convert repetitive markdown links like [https://...](https://...) -> label or clean URL
+    html = html.replace(/\[?(https?:\/\/[^\s\]\)]+?)\]?\((https?:\/\/[^\s\)]+?)\)/g, (match, u1, u2) => {
+      const url = u2 || u1;
+      for (const item of KNOWN_LINK_MAP) {
+        if (item.regex.test(url)) {
+          return `[${item.label}](${url})`;
+        }
+      }
+      return url;
+    });
+
+    // 2. Convert standard markdown links [Text Label](https://...) -> clickable link
+    html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s\)]+)\)/g, (match, label, rawUrl) => {
+      const cleanUrl = rawUrl.replace(/\/+$/, '');
+      return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`;
+    });
+
+    // 3. Convert known bare URLs into friendly labeled links
+    KNOWN_LINK_MAP.forEach(({ regex, label }) => {
+      const safeRegex = new RegExp('(?<!href=["\']|">)' + regex.source, 'gi');
+      html = html.replace(safeRegex, (match) => {
+        const cleanUrl = match.replace(/\/+$/, '');
+        return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${label} ↗</a>`;
+      });
+    });
+
+    // 4. Convert any remaining unlinked raw URLs into clean links
+    html = html.replace(/(?<!href=["'])(https?:\/\/[^\s<"']+?)([.,;:)\]]*)(?=\s|$|<|")/g, (match, rawUrl, trail) => {
+      const cleanUrl = rawUrl.replace(/\/+$/, '');
+      return `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer">${cleanUrl} ↗</a>${trail}`;
+    });
+
+    el.innerHTML = html;
+  }
+}
+
+function renderMessageMarkdown(text) {
+  if (!text) return '';
+  const lines = text.split('\n');
+  let inList = false;
+  let listType = null;
+  const htmlParts = [];
+
+  function closeList() {
+    if (inList) {
+      htmlParts.push(`</${listType}>`);
+      inList = false;
+      listType = null;
+    }
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    if (!line) {
+      closeList();
+      continue;
+    }
+
+    const ulMatch = line.match(/^[-*•]\s+(.+)$/);
+    if (ulMatch) {
+      if (!inList || listType !== 'ul') {
+        closeList();
+        htmlParts.push('<ul class="message-list">');
+        inList = true;
+        listType = 'ul';
+      }
+      const itemText = formatInlineMarkdown(escapeHtml(ulMatch[1].trim()));
+      htmlParts.push(`<li>${itemText}</li>`);
+      continue;
+    }
+
+    const olMatch = line.match(/^(\d+)\.\s+(.+)$/);
+    if (olMatch) {
+      if (!inList || listType !== 'ol') {
+        closeList();
+        htmlParts.push('<ol class="message-list">');
+        inList = true;
+        listType = 'ol';
+      }
+      const itemText = formatInlineMarkdown(escapeHtml(olMatch[2].trim()));
+      htmlParts.push(`<li>${itemText}</li>`);
+      continue;
+    }
+
+    closeList();
+    const pText = formatInlineMarkdown(escapeHtml(line));
+    htmlParts.push(`<p>${pText}</p>`);
+  }
+
+  closeList();
+  return htmlParts.join('');
+}
+
 function addMessage(role, text, responseId = null, questionText = '') {
   const item = document.createElement('article');
   item.className = `message ${role}`;
   item.innerHTML = `<small>${role === 'assistant' ? 'Career Fair Coach' : 'You'}</small>`;
   const content = document.createElement('div');
-  content.textContent = text;
+  content.className = 'message-content';
+  content.innerHTML = renderMessageMarkdown(text);
+  formatMessageLinks(content);
   item.appendChild(content);
 
   if (role === 'assistant' && responseId) {

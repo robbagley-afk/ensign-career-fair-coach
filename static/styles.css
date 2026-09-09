@@ -178,6 +178,13 @@ html, body {
   letter-spacing: -0.2px;
 }
 
+.handshake-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .handshake-btn {
   display: inline-flex;
   align-items: center;
@@ -201,6 +208,17 @@ html, body {
 
 .handshake-btn:active {
   transform: translateY(0);
+}
+
+.handshake-btn-secondary {
+  background: #ffffff;
+  color: var(--green-darker);
+  border: 1px solid rgba(247, 182, 25, 0.6);
+}
+
+.handshake-btn-secondary:hover {
+  background: #fdf6e2;
+  border-color: var(--gold);
 }
 
 /* Main Content Workspace */
