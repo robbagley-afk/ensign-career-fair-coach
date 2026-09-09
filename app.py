@@ -489,6 +489,32 @@ class CareerFairCoachHandler(SimpleHTTPRequestHandler):
             return
 
         # ----------------------------------------------------------------------
+        # Audio Transcription Endpoint (Whisper Proxy / Local)
+        # ----------------------------------------------------------------------
+        if clean_path == "/api/transcribe":
+            try:
+                content_length = int(self.headers.get("Content-Length", "0"))
+                content_type = self.headers.get("Content-Type", "")
+                raw_audio_data = self.rfile.read(content_length)
+
+                # Forward binary multipart request to Interview Coach port 5015
+                target_url = "http://127.0.0.1:5015/api/transcribe"
+                req = Request(target_url, data=raw_audio_data, headers={"Content-Type": content_type}, method="POST")
+                with urlopen(req, timeout=45) as resp:
+                    resp_data = json.loads(resp.read().decode("utf-8"))
+                    self._json(resp_data, HTTPStatus(resp.status))
+            except HTTPError as e:
+                try:
+                    err_payload = json.loads(e.read().decode("utf-8"))
+                except Exception:
+                    err_payload = {"error": f"Transcription service error ({e.code})"}
+                self._json(err_payload, HTTPStatus(e.code))
+            except Exception as e:
+                print(f"[Transcription Forward Error] {e}")
+                self._json({"error": f"Local transcription unavailable: {e}"}, HTTPStatus.SERVICE_UNAVAILABLE)
+            return
+
+        # ----------------------------------------------------------------------
         # Chat Endpoint
         # ----------------------------------------------------------------------
         if clean_path != "/api/chat":

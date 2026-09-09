@@ -32,6 +32,25 @@ const form = document.querySelector('#chat-form');
 const label = document.querySelector('#mode-label');
 const status = document.querySelector('#service-status');
 
+// Voice Practice Elements (Practice Mode)
+const voicePracticePanel = document.querySelector('#voice-practice-panel');
+const btnVoiceRecord = document.querySelector('#btn-voice-record');
+const btnVoiceStop = document.querySelector('#btn-voice-stop');
+const btnVoiceSend = document.querySelector('#btn-voice-send');
+const voiceWaveform = document.querySelector('#waveform');
+const voiceTimer = document.querySelector('#voice-timer');
+const voiceStatusText = document.querySelector('#voice-status-text');
+const micIndicatorDot = document.querySelector('#mic-indicator .mic-dot');
+const micStatusLabel = document.querySelector('#mic-status-label');
+
+let isRecording = false;
+let mediaRecorder = null;
+let audioChunks = [];
+let micStream = null;
+let recordTimerInterval = null;
+let recordSeconds = 0;
+let lastTranscribedText = '';
+
 function createFeedbackButton(label, className) {
   const btn = document.createElement('button');
   btn.type = 'button';
@@ -334,6 +353,17 @@ function setMode(nextMode) {
   history = [];
   lastUserMessage = '';
 
+  // Show voice practice panel specifically on Step 3: Practice
+  if (voicePracticePanel) {
+    if (mode === 'practice') {
+      voicePracticePanel.hidden = false;
+      resetVoiceState();
+    } else {
+      voicePracticePanel.hidden = true;
+      stopVoiceRecording();
+    }
+  }
+
   if (modes[mode]) {
     addMessage('assistant', modes[mode].opener);
     suggestions.innerHTML = '';
@@ -351,6 +381,171 @@ function setMode(nextMode) {
       suggestions.appendChild(button);
     });
   }
+}
+
+// ---------------------------------------------------------------------------
+// Voice Recording and Transcription Logic (Modeled after Interview Practice)
+// ---------------------------------------------------------------------------
+
+function updateVoiceTimer() {
+  recordSeconds++;
+  const mins = String(Math.floor(recordSeconds / 60)).padStart(2, '0');
+  const secs = String(recordSeconds % 60).padStart(2, '0');
+  if (voiceTimer) {
+    voiceTimer.textContent = `${mins}:${secs} (Target: ~30s)`;
+  }
+}
+
+function resetVoiceState() {
+  if (recordTimerInterval) {
+    clearInterval(recordTimerInterval);
+    recordTimerInterval = null;
+  }
+  recordSeconds = 0;
+  if (voiceTimer) voiceTimer.textContent = '00:00 (Target: ~30s)';
+  if (btnVoiceRecord) btnVoiceRecord.disabled = false;
+  if (btnVoiceStop) btnVoiceStop.disabled = true;
+  if (btnVoiceSend) btnVoiceSend.disabled = true;
+  if (voiceWaveform) voiceWaveform.classList.remove('active');
+  if (micIndicatorDot) micIndicatorDot.className = 'mic-dot';
+  if (micStatusLabel) micStatusLabel.textContent = 'Mic Ready';
+  if (voiceStatusText) {
+    voiceStatusText.className = 'voice-status-text';
+    voiceStatusText.textContent = '';
+  }
+}
+
+async function startVoiceRecording() {
+  audioChunks = [];
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(micStream);
+
+    mediaRecorder.ondataavailable = (event) => {
+      if (event.data && event.data.size > 0) {
+        audioChunks.push(event.data);
+      }
+    };
+
+    mediaRecorder.onstart = () => {
+      isRecording = true;
+      btnVoiceRecord.disabled = true;
+      btnVoiceStop.disabled = false;
+      btnVoiceSend.disabled = true;
+      micIndicatorDot.className = 'mic-dot recording';
+      micStatusLabel.textContent = 'Recording…';
+      voiceWaveform.classList.add('active');
+      voiceStatusText.className = 'voice-status-text working';
+      voiceStatusText.textContent = '🎙️ Recording your 30-second pitch… Speak clearly into your mic.';
+      recordSeconds = 0;
+      updateVoiceTimer();
+      recordTimerInterval = setInterval(updateVoiceTimer, 1000);
+    };
+
+    mediaRecorder.onstop = async () => {
+      isRecording = false;
+      btnVoiceRecord.disabled = false;
+      btnVoiceStop.disabled = true;
+      micIndicatorDot.className = 'mic-dot';
+      micStatusLabel.textContent = 'Processing';
+      voiceWaveform.classList.remove('active');
+      if (recordTimerInterval) {
+        clearInterval(recordTimerInterval);
+        recordTimerInterval = null;
+      }
+
+      const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+      await uploadVoiceForTranscription(audioBlob);
+    };
+
+    mediaRecorder.start(1000);
+  } catch (err) {
+    console.error('Microphone access error:', err);
+    micStatusLabel.textContent = 'Mic Error';
+    voiceStatusText.className = 'voice-status-text error';
+    voiceStatusText.textContent = '⚠️ Could not access microphone. Please allow microphone permissions in your browser or type your pitch below.';
+    resetVoiceState();
+  }
+}
+
+function stopVoiceRecording() {
+  if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+    mediaRecorder.stop();
+  }
+  if (micStream) {
+    micStream.getTracks().forEach((track) => track.stop());
+    micStream = null;
+  }
+}
+
+async function uploadVoiceForTranscription(audioBlob) {
+  voiceStatusText.className = 'voice-status-text working';
+  voiceStatusText.textContent = '⏳ Transcribing your pitch locally with Whisper… Please wait.';
+  btnVoiceRecord.disabled = true;
+  btnVoiceStop.disabled = true;
+  btnVoiceSend.disabled = true;
+
+  const formData = new FormData();
+  formData.append('audio', audioBlob, 'pitch.webm');
+
+  try {
+    const resp = await fetch('api/transcribe', {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!resp.ok) {
+      throw new Error(`Server returned error: ${resp.statusText}`);
+    }
+
+    const data = await resp.json();
+    if (data.error) throw new Error(data.error);
+
+    let rawText = data.transcript || '';
+    rawText = rawText.replace(/\[\d{2}:\d{2}\] Speaker: /g, '').trim();
+
+    if (!rawText) {
+      throw new Error('Transcription returned an empty response. Try speaking louder or typing.');
+    }
+
+    lastTranscribedText = rawText;
+    input.value = rawText;
+    input.style.height = `${Math.min(input.scrollHeight, 90)}px`;
+    input.focus();
+
+    btnVoiceSend.disabled = false;
+    micStatusLabel.textContent = 'Ready';
+    voiceStatusText.className = 'voice-status-text';
+    voiceStatusText.textContent = '✓ Transcribed! Review your text in the box below, edit if needed, or click "Send Pitch to Coach".';
+  } catch (err) {
+    console.error('Transcription error:', err);
+    micStatusLabel.textContent = 'Transcribe Failed';
+    voiceStatusText.className = 'voice-status-text error';
+    voiceStatusText.textContent = `Transcription failed (${err.message}). You can type your pitch directly into the box below.`;
+  } finally {
+    btnVoiceRecord.disabled = false;
+  }
+}
+
+if (btnVoiceRecord) {
+  btnVoiceRecord.addEventListener('click', () => startVoiceRecording());
+}
+
+if (btnVoiceStop) {
+  btnVoiceStop.addEventListener('click', () => stopVoiceRecording());
+}
+
+if (btnVoiceSend) {
+  btnVoiceSend.addEventListener('click', () => {
+    const textToSend = input.value.trim() || lastTranscribedText.trim();
+    if (textToSend) {
+      input.value = '';
+      input.style.height = '44px';
+      btnVoiceSend.disabled = true;
+      voiceStatusText.textContent = '';
+      submitMessage(textToSend);
+    }
+  });
 }
 
 async function submitMessage(message) {
@@ -399,6 +594,9 @@ input.addEventListener('input', () => {
   if (input.scrollHeight > 44) {
     input.style.height = `${Math.min(input.scrollHeight, 90)}px`;
   }
+  if (btnVoiceSend && mode === 'practice') {
+    btnVoiceSend.disabled = input.value.trim().length === 0;
+  }
 });
 
 document.querySelectorAll('.step-btn, .mode').forEach((button) => {
@@ -411,3 +609,4 @@ if (newChatBtn) {
 }
 
 setMode(mode);
+

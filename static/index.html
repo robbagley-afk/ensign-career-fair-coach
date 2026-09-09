@@ -95,6 +95,59 @@
             <div class="suggestions" id="suggestions"></div>
           </div>
 
+          <!-- Voice Practice Panel (Step 3 Practice Mode) -->
+          <div id="voice-practice-panel" class="voice-practice-panel" hidden>
+            <div class="voice-panel-header">
+              <div class="voice-panel-title-row">
+                <span class="voice-badge">🎤 Voice Pitch Practice</span>
+                <span class="voice-hint">Record your "Me in 30 Seconds" or type below</span>
+              </div>
+              <div class="voice-status-badges">
+                <span id="mic-indicator" class="mic-indicator" title="Microphone Status">
+                  <span class="mic-dot"></span>
+                  <span id="mic-status-label">Mic Ready</span>
+                </span>
+              </div>
+            </div>
+
+            <div class="waveform-container" id="waveform-wrap">
+              <div class="waveform" id="waveform">
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+                <div class="waveform-bar"></div>
+              </div>
+              <p id="voice-timer" class="voice-timer">00:00 (Target: ~30s)</p>
+            </div>
+
+            <div class="voice-controls" aria-label="Voice answer steps">
+              <button type="button" id="btn-voice-record" class="btn-voice btn-voice-record">
+                <span class="voice-step-num">1</span>
+                <span>Start Recording</span>
+              </button>
+              <button type="button" id="btn-voice-stop" class="btn-voice btn-voice-stop" disabled>
+                <span class="voice-step-num">2</span>
+                <span>Stop / Done</span>
+              </button>
+              <button type="button" id="btn-voice-send" class="btn-voice btn-voice-send" disabled>
+                <span class="voice-step-num">3</span>
+                <span>Send Pitch to Coach</span>
+              </button>
+            </div>
+            <p id="voice-status-text" class="voice-status-text"></p>
+          </div>
+
           <form id="chat-form" class="composer">
             <label class="sr-only" for="message-input">Message the Career Fair Coach</label>
             <textarea id="message-input" rows="1" placeholder="Tell the coach about an employer, role, or pitch..."></textarea>
