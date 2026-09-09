@@ -21,6 +21,7 @@ html, body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   background: var(--green-deep);
   background: linear-gradient(175deg, #003d2e 0%, #004937 40%, #005941 100%);
   color: var(--paper);
@@ -92,7 +93,7 @@ html, body {
 
 .step-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
 }
 
@@ -608,6 +609,7 @@ html, body {
   padding: 8px 16px 4px;
   background: #ffffff;
   border-top: 1px solid var(--line);
+  flex-wrap: wrap;
 }
 
 .chat-here-title {
