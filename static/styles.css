@@ -31,8 +31,10 @@ html, body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  max-width: 860px;
+  width: 100%;
+  max-width: min(1360px, calc(100% - 48px));
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 /* Header */
@@ -302,7 +304,7 @@ html, body {
   max-height: calc(100vh - 310px);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  padding: 16px 14px;
+  padding: 1.5rem 2rem; /* Section 7a standard: 24px top/bottom, 32px left/right breathing rail */
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -630,7 +632,7 @@ html, body {
   display: flex;
   align-items: flex-end;
   gap: 8px;
-  padding: 6px 14px 14px;
+  padding: 0.875rem 2rem 1.25rem; /* Mirrors .messages 2rem (32px) horizontal rail */
   background: #ffffff;
 }
 
