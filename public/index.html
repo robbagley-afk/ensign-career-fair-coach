@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#004937" />
-    <title>Ensign Career Fair Coach</title>
+    <title>Career Fair Coach v1.0 — Ensign College Career Services</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="ces-tokens.css" />
+    <link rel="stylesheet" href="ces-components.css" />
+    <link rel="stylesheet" href="styles.css?v=standard-v1.0" />
     <!-- Vercel Web Analytics -->
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -22,7 +24,7 @@
     <div class="app-container">
       <header class="topbar">
         <div class="brand-group">
-          <a class="brand" href="#top" aria-label="Career Fair Coach home">Career Fair Coach</a>
+          <a class="brand" href="#top" aria-label="Career Fair Coach home">Career Fair Coach <span class="ces-version-tag">v1.0</span></a>
           <span class="brand-sub">Ensign College</span>
         </div>
         <button id="new-chat" class="quiet-button" type="button" aria-label="Start a new conversation">
@@ -188,6 +190,7 @@
         <span>Admin</span>
       </a>
     </div>
+    <script src="ces-motion.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

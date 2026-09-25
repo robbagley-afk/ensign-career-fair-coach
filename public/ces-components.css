@@ -1,0 +1,356 @@
+/* ==========================================================================
+   CES Component Library v1.1
+   Standardized UI components for Ensign College Career Services Apps
+   Derived from Ensign Student Readiness Hub & Fortified via /ui-ux-principles
+   ========================================================================== */
+
+/* ── 1. Topbar & Header ── */
+.ces-topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  min-height: var(--ces-topbar-height);
+  background: var(--ces-navy-900);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--ces-shadow-topbar);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 28px;
+  color: #ffffff;
+}
+
+.ces-brand-group {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: #ffffff;
+  min-height: var(--ces-touch-min);
+}
+
+.ces-brand-crest {
+  width: 40px;
+  height: 40px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, var(--ces-navy-800) 0%, var(--ces-navy-950) 100%);
+  border: 1.5px solid var(--ces-gold);
+  display: grid;
+  place-items: center;
+  color: var(--ces-gold);
+  font-family: var(--ces-font-serif);
+  font-size: 21px;
+  font-weight: 700;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  flex-shrink: 0;
+}
+
+.ces-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.ces-brand-title {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ces-brand-sub {
+  font-size: 11px;
+  font-weight: 650;
+  color: var(--ces-gold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ces-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ces-nav-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--ces-btn-min-height);
+  padding: 8px 14px;
+  border-radius: var(--ces-radius-sm);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 650;
+  text-decoration: none;
+  transition: all var(--ces-transition);
+}
+
+.ces-nav-back:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--ces-gold);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.ces-nav-back:focus-visible {
+  outline: var(--ces-focus-ring-width) solid var(--ces-focus-ring);
+  outline-offset: var(--ces-focus-ring-offset);
+}
+
+/* ── 2. Status & Version Badges ── */
+.ces-version-tag {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: var(--ces-radius-pill);
+  font-size: 11px;
+  font-weight: 750;
+  font-family: var(--ces-font-mono);
+  background: rgba(212, 158, 36, 0.2);
+  color: var(--ces-gold);
+  border: 1px solid rgba(212, 158, 36, 0.35);
+  vertical-align: middle;
+}
+
+.ces-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 28px;
+  padding: 4px 12px;
+  border-radius: var(--ces-radius-pill);
+  font-size: 12px;
+  font-weight: 650;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+}
+
+.ces-status-pill .ces-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ces-status-success-border);
+  box-shadow: 0 0 0 2px rgba(22, 101, 52, 0.3);
+  flex-shrink: 0;
+}
+
+.ces-status-pill.warning .ces-dot {
+  background: var(--ces-status-warning-border);
+  box-shadow: 0 0 0 2px rgba(146, 64, 14, 0.3);
+}
+
+.ces-status-pill.error .ces-dot {
+  background: var(--ces-status-error-border);
+  box-shadow: 0 0 0 2px rgba(153, 27, 27, 0.3);
+}
+
+/* Light / Card Pills */
+.ces-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--ces-radius-pill);
+  font-size: var(--ces-text-xs);
+  font-weight: 600;
+  line-height: 1.4;
+  border: 1px solid transparent;
+}
+
+.ces-pill--success {
+  background-color: var(--ces-status-success-bg);
+  color: var(--ces-status-success-text);
+  border-color: var(--ces-status-success-border);
+}
+
+.ces-pill--warning {
+  background-color: var(--ces-status-warning-bg);
+  color: var(--ces-status-warning-text);
+  border-color: var(--ces-status-warning-border);
+}
+
+.ces-pill--error {
+  background-color: var(--ces-status-error-bg);
+  color: var(--ces-status-error-text);
+  border-color: var(--ces-status-error-border);
+}
+
+.ces-pill--info {
+  background-color: var(--ces-status-info-bg);
+  color: var(--ces-status-info-text);
+  border-color: var(--ces-status-info-border);
+}
+
+.ces-pill--neutral {
+  background-color: var(--ces-status-neutral-bg);
+  color: var(--ces-status-neutral-text);
+  border-color: var(--ces-status-neutral-border);
+}
+
+/* ── 3. Buttons ── */
+.ces-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: var(--ces-btn-min-height);
+  min-width: var(--ces-btn-min-width);
+  padding: 9px 18px;
+  border-radius: var(--ces-radius-sm);
+  font-family: var(--ces-font-body);
+  font-size: 13.5px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: transform var(--ces-transition), background var(--ces-transition), border-color var(--ces-transition), box-shadow var(--ces-transition);
+}
+
+.ces-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.ces-btn:focus-visible,
+button:focus-visible,
+[type="button"]:focus-visible,
+[type="submit"]:focus-visible,
+a:focus-visible,
+.dashboard-link:focus-visible,
+.nav-link:focus-visible,
+[role="tab"]:focus-visible,
+[role="button"]:focus-visible {
+  outline: var(--ces-focus-ring-width) solid var(--ces-focus-ring) !important;
+  outline-offset: var(--ces-focus-ring-offset) !important;
+}
+
+.ces-btn-primary {
+  background: linear-gradient(135deg, var(--ces-navy-900) 0%, var(--ces-navy-800) 100%);
+  color: #ffffff;
+  border-color: var(--ces-navy-950);
+  box-shadow: 0 3px 12px rgba(13, 34, 56, 0.18);
+}
+
+.ces-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--ces-navy-850) 0%, var(--ces-navy-700) 100%);
+  box-shadow: 0 5px 16px rgba(13, 34, 56, 0.25);
+  border-color: var(--ces-gold);
+}
+
+.ces-btn-gold {
+  background: var(--ces-gold);
+  color: var(--ces-navy-950);
+  border-color: var(--ces-gold);
+  box-shadow: 0 3px 10px rgba(212, 158, 36, 0.25);
+}
+
+.ces-btn-gold:hover:not(:disabled) {
+  background: var(--ces-gold-hover);
+  border-color: var(--ces-gold-hover);
+  box-shadow: 0 5px 14px rgba(212, 158, 36, 0.35);
+}
+
+.ces-btn-secondary {
+  background: #ffffff;
+  color: var(--ces-navy-900);
+  border-color: var(--ces-line);
+}
+
+.ces-btn-secondary:hover:not(:disabled) {
+  background: var(--ces-navy-50);
+  border-color: var(--ces-navy-700);
+}
+
+/* ── 4. Panels & Cards ── */
+.ces-panel {
+  background: var(--ces-surface);
+  border: 1px solid var(--ces-line);
+  border-radius: var(--ces-radius-lg);
+  box-shadow: var(--ces-shadow-md);
+  padding: 24px 28px;
+  transition: border-color var(--ces-transition), box-shadow var(--ces-transition);
+}
+
+.ces-panel--student {
+  border-top: 4px solid var(--ces-gold);
+}
+
+.ces-panel--mentor {
+  border-top: 4px solid var(--ces-navy-700);
+}
+
+.ces-prose {
+  max-width: var(--ces-prose-max-width);
+}
+
+.ces-card-content {
+  max-width: var(--ces-card-max-width);
+  margin-inline: auto;
+}
+
+/* ── 5. Form Elements ── */
+.ces-input,
+.ces-textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid var(--ces-line);
+  border-radius: var(--ces-radius-sm);
+  background: #ffffff;
+  font-family: var(--ces-font-body);
+  font-size: 14px;
+  color: var(--ces-ink);
+  transition: border-color var(--ces-transition), box-shadow var(--ces-transition);
+}
+
+.ces-input:focus-visible,
+.ces-textarea:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: var(--ces-focus-ring-width) solid var(--ces-focus-ring) !important;
+  outline-offset: 0px !important;
+  border-color: var(--ces-gold);
+}
+
+/* ── 6. Reduced Motion Support ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── 7. Forced Colors (Windows High Contrast Mode) Support ── */
+@media (forced-colors: active) {
+  *:focus-visible {
+    outline: 2px solid Highlight !important;
+    outline-offset: 2px !important;
+  }
+
+  .ces-pill,
+  .ces-pill--success,
+  .ces-pill--warning,
+  .ces-pill--error,
+  .ces-pill--info,
+  .ces-pill--neutral {
+    background-color: ButtonFace;
+    color: ButtonText;
+    border-color: ButtonText;
+    forced-color-adjust: none;
+  }
+
+  .ces-status-pill .ces-dot {
+    background-color: ButtonText;
+    outline: 1px solid ButtonText;
+  }
+}

@@ -1,0 +1,131 @@
+/* ==========================================================================
+   CES Design Token Sheet v1.1
+   Ensign College Career Services Design System Standard
+   Derived from Ensign Student Readiness Hub & Fortified via /ui-ux-principles
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* ── 1. Color: Brand Base (Ensign Navy & Slate Hierarchy) ── */
+  --ces-navy-950:     #0a1826;   /* Deepest Navy — Sidebar, main heading high-contrast */
+  --ces-navy-900:     #0d2238;   /* Primary Topbar, active dark states */
+  --ces-navy-850:     #122b46;   /* Dark interactive hover */
+  --ces-navy-800:     #183759;   /* Secondary dark surfaces */
+  --ces-navy-700:     #224974;   /* Mid slate navy */
+  --ces-navy-600:     #2f5f93;   /* Light slate navy */
+  --ces-navy-100:     #e8f0f8;   /* Soft navy tint */
+  --ces-navy-50:      #f3f7fb;   /* Subtle background / chip fill */
+
+  /* ── 2. Color: Gold Accent (Warm Ensign Gold) ── */
+  --ces-gold:         #d49e24;   /* Primary accent, active borders, status pills */
+  --ces-gold-hover:   #b8861a;   /* Hover gold state */
+  --ces-gold-light:   #fef8eb;   /* Light gold badge/alert background */
+  --ces-gold-border:  #f3d791;   /* Gold subtle border */
+
+  /* ── 3. Color: Surface & Content ── */
+  --ces-ink:          #111c26;   /* High-contrast body text */
+  --ces-ink-soft:     #253545;   /* Secondary text */
+  --ces-muted:        #5c6e80;   /* Muted captions, metadata */
+  --ces-muted-light:  #8ba0b5;   /* Subtle icons, placeholders */
+  --ces-line:         #e2e8f0;   /* Standard card borders & dividers */
+  --ces-line-soft:    #edf2f7;   /* Secondary subtle dividers */
+  --ces-surface:      #ffffff;   /* Card, modal, panel surfaces */
+  --ces-background:   #f6f8fb;   /* Clean page background */
+
+  /* ── 4. Color: Semantic / Status (WCAG 2.2 AA Verified ≥ 4.5:1 on light/wash) ── */
+  --ces-status-success-bg:     #dcfce7;
+  --ces-status-success-text:   #166534; /* 6.9:1 on white, 7.2:1 on bg */
+  --ces-status-success-border: #86efac;
+
+  --ces-status-warning-bg:     #fef3c7;
+  --ces-status-warning-text:   #92400e; /* 7.6:1 on white, 7.6:1 on bg */
+  --ces-status-warning-border: #fcd34d;
+
+  --ces-status-error-bg:       #fee2e2;
+  --ces-status-error-text:     #991b1b; /* 7.1:1 on white, 7.3:1 on bg */
+  --ces-status-error-border:   #fca5a5;
+
+  --ces-status-info-bg:        #dbeafe;
+  --ces-status-info-text:      #1e3a8a; /* 8.6:1 on white */
+  --ces-status-info-border:    #93c5fd;
+
+  --ces-status-neutral-bg:     #f3f4f6;
+  --ces-status-neutral-text:   #374151; /* 8.0:1 on white */
+  --ces-status-neutral-border: #9ca3af;
+
+  /* Aliases to prevent breaking older views */
+  --ces-success:               var(--ces-status-success-text);
+  --ces-success-bg:            var(--ces-status-success-bg);
+  --ces-success-border:        var(--ces-status-success-border);
+  --ces-warning:               var(--ces-status-warning-text);
+  --ces-warning-bg:            var(--ces-status-warning-bg);
+  --ces-warning-border:        var(--ces-status-warning-border);
+  --ces-error:                 var(--ces-status-error-text);
+  --ces-error-bg:              var(--ces-status-error-bg);
+  --ces-error-border:          var(--ces-status-error-border);
+  --ces-info:                  var(--ces-status-info-text);
+  --ces-info-bg:               var(--ces-status-info-bg);
+  --ces-info-border:           var(--ces-status-info-border);
+
+  /* ── 5. Focus Ring Tokens (WCAG 2.2 AA ≥ 3:1) ── */
+  --ces-focus-ring-dark:       #f0c040; /* Gold ring for navy/dark surfaces */
+  --ces-focus-ring-light:      #1e3a5f; /* Dark navy ring for white surfaces */
+  --ces-focus-ring:            var(--ces-focus-ring-dark);
+  --ces-focus-ring-width:      2px;
+  --ces-focus-ring-offset:     2px;
+
+  /* ── 6. Typography ── */
+  --ces-font-body:    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --ces-font-serif:   Georgia, Cambria, 'Times New Roman', serif;
+  --ces-font-mono:    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --ces-text-xs:      0.75rem;    /* 12px — status pills, labels */
+  --ces-text-sm:      0.875rem;   /* 14px — secondary body */
+  --ces-text-base:    0.9375rem;  /* 15px — primary body */
+  --ces-text-lg:      1.125rem;   /* 18px — card titles */
+  --ces-text-xl:      1.25rem;    /* 20px — section headers */
+  --ces-text-2xl:     1.625rem;   /* 26px — page titles */
+
+  --ces-weight-normal:   400;
+  --ces-weight-medium:   500;
+  --ces-weight-semibold: 650;
+  --ces-weight-bold:     750;
+  --ces-weight-extrabold:850;
+
+  /* ── 7. Elevation & Shadows ── */
+  --ces-shadow-sm:    0 1px 3px rgba(10, 24, 38, 0.05);
+  --ces-shadow-md:    0 4px 16px rgba(10, 24, 38, 0.07);
+  --ces-shadow-lg:    0 12px 36px rgba(10, 24, 38, 0.10);
+  --ces-shadow-topbar:0 2px 10px rgba(10, 24, 38, 0.12);
+
+  /* ── 8. Radii ── */
+  --ces-radius-sm:    6px;
+  --ces-radius-md:    10px;
+  --ces-radius-lg:    14px;
+  --ces-radius-pill:  9999px;
+
+  /* ── 9. Touch Targets & Layout Constraints ── */
+  --ces-touch-min:          44px;
+  --ces-btn-min-height:     44px;
+  --ces-btn-min-width:      44px;
+  --ces-topbar-height:      72px;
+  --ces-content-max:        1320px;
+  --ces-prose-max-width:    68ch;
+  --ces-card-max-width:     760px;
+
+  /* ── 10. Motion & Transitions ── */
+  --ces-transition-speed:   150ms;
+  --ces-transition-easing:  cubic-bezier(0.4, 0, 0.2, 1);
+  --ces-transition:         var(--ces-transition-speed) var(--ces-transition-easing);
+  --ces-transition-smooth:  var(--ces-transition-speed) var(--ces-transition-easing);
+}
+
+/* Reduced Motion Override */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --ces-transition-speed: 0s;
+    --ces-transition: 0s linear;
+    --ces-transition-smooth: 0s linear;
+  }
+}

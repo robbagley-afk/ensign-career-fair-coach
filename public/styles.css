@@ -1056,4 +1056,34 @@ textarea#message-input:focus {
   transform: translateY(0);
 }
 
+/* CES Brand Versioning & WCAG 2.2 AA Interaction Enhancements */
+.ces-version-tag {
+  display: inline-block;
+  font-size: var(--ces-font-size-xs, 0.75rem);
+  font-weight: 700;
+  color: var(--ces-gold, #f5a81c);
+  background: rgba(245, 168, 28, 0.15);
+  border: 1px solid rgba(245, 168, 28, 0.35);
+  border-radius: var(--ces-radius-full, 9999px);
+  padding: 0.1rem 0.45rem;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+  letter-spacing: 0.03em;
+}
+
+button, input, select, textarea, .step-btn, .quiet-button, .admin-fab {
+  min-height: 44px;
+}
+
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+  outline: 2px solid var(--ces-gold, #f5a81c);
+  outline-offset: 2px;
+}
+
+@media (forced-colors: active) {
+  button, a, input, textarea, select {
+    border: 2px solid ButtonText !important;
+  }
+}
+
 
