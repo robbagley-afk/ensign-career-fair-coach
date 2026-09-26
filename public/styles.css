@@ -22,9 +22,8 @@ html, body {
   padding: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  background: var(--green-deep);
-  background: linear-gradient(175deg, #003d2e 0%, #004937 40%, #005941 100%);
-  color: var(--paper);
+  background: var(--surface-sunken);
+  color: var(--ink);
 }
 
 .app-container {
@@ -32,10 +31,10 @@ html, body {
   flex-direction: column;
   min-height: 100vh;
   width: 100%;
-  max-width: min(1360px, calc(100% - 48px));
-  margin: 0 auto;
+  padding: 0 var(--gutter);
   box-sizing: border-box;
 }
+Show more lines
 
 /* Header */
 .topbar {
@@ -60,7 +59,7 @@ html, body {
 }
 
 .brand-sub {
-  font-size: 11px;
+  font-size: 17px;
   color: var(--gold);
   font-weight: 700;
   text-transform: uppercase;
@@ -76,7 +75,7 @@ html, body {
   color: #ffffff;
   padding: 6px 12px;
   border-radius: 16px;
-  font-size: 12.5px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
   text-decoration: none;
@@ -122,7 +121,7 @@ html, body {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  font-size: 11px;
+  font-size: 17px;
   font-weight: 800;
   color: #ffffff;
   border: 1.5px solid rgba(255, 255, 255, 0.5);
@@ -130,7 +129,7 @@ html, body {
 }
 
 .step-text {
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 700;
   white-space: nowrap;
   overflow: hidden;
@@ -175,7 +174,7 @@ html, body {
 }
 
 .handshake-text {
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
   color: #e3efe9;
   letter-spacing: -0.2px;
@@ -194,7 +193,7 @@ html, body {
   gap: 6px;
   background: var(--gold);
   color: var(--green-darker);
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 700;
   padding: 6px 14px;
   border-radius: 20px;
@@ -274,7 +273,7 @@ html, body {
 
 .coach-name {
   margin: 0;
-  font-size: 15px;
+  font-size: 17px;
   font-weight: 800;
   color: var(--ink);
   line-height: 1.2;
@@ -282,13 +281,13 @@ html, body {
 
 .mode-label {
   margin: 1px 0 0;
-  font-size: 12px;
+  font-size: 17px;
   color: var(--muted);
   font-weight: 600;
 }
 
 .status {
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--green);
   background: #edf7f2;
@@ -315,7 +314,7 @@ html, body {
   padding: 12px 15px;
   border-radius: 16px;
   line-height: 1.48;
-  font-size: 14.5px;
+  font-size: var(--text-body);
   white-space: pre-wrap;
   word-break: break-word;
 }
@@ -338,7 +337,7 @@ html, body {
 .message small {
   display: block;
   margin-bottom: 4px;
-  font-size: 10.5px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -365,7 +364,7 @@ html, body {
   color: var(--green-deep);
   padding: 7px 12px;
   font: inherit;
-  font-size: 12.5px;
+  font-size: 17px;
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
@@ -412,16 +411,17 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 800;
   color: #065f46;
   background: #d1fae5;
   padding: 4px 10px;
   border-radius: 999px;
 }
+Show more lines
 
 .voice-hint {
-  font-size: 12px;
+  font-size: 17px;
   color: #047857;
   font-weight: 600;
 }
@@ -435,7 +435,7 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11.5px;
+  font-size: 17px;
   font-weight: 700;
   color: #047857;
   padding: 3px 8px;
@@ -502,7 +502,7 @@ html, body {
 
 .voice-timer {
   margin: 0;
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 700;
   color: #065f46;
   white-space: nowrap;
@@ -528,7 +528,7 @@ html, body {
   min-height: 38px;
   padding: 7px 12px;
   border-radius: 10px;
-  font-size: 12.5px;
+  font-size: 17px;
   font-weight: 700;
   cursor: pointer;
   border: 1px solid transparent;
@@ -544,7 +544,7 @@ html, body {
   height: 18px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.3);
-  font-size: 11px;
+  font-size: 17px;
   font-weight: 800;
 }
 
@@ -588,7 +588,7 @@ html, body {
 
 .voice-status-text {
   margin: 8px 0 0;
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 600;
   color: #065f46;
   min-height: 16px;
@@ -615,14 +615,14 @@ html, body {
 }
 
 .chat-here-title {
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 800;
   color: var(--green-deep);
   letter-spacing: -0.2px;
 }
 
 .chat-here-hint {
-  font-size: 11.5px;
+  font-size: 17px;
   color: var(--muted);
   font-weight: 600;
 }
@@ -646,14 +646,15 @@ textarea#message-input {
   border-radius: 20px;
   color: var(--ink);
   font: inherit;
-  font-size: 14.5px;
+  font-size: var(--text-body);
   line-height: 1.35;
   resize: none;
   background: #fafcfb;
 }
 
 textarea#message-input:focus {
-  outline: none;
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
   border-color: var(--green);
   background: #ffffff;
   box-shadow: 0 0 0 3px rgba(0, 107, 78, 0.15);
@@ -667,7 +668,7 @@ textarea#message-input:focus {
   background: var(--green);
   color: #ffffff;
   font: inherit;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 700;
   cursor: pointer;
   display: inline-flex;
@@ -713,7 +714,7 @@ textarea#message-input:focus {
   border-radius: 20px;
   color: #ffffff;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
@@ -725,9 +726,10 @@ textarea#message-input:focus {
 
 .footer-privacy {
   margin: 0;
-  font-size: 11.5px;
+  font-size: 17px;
   color: rgba(255, 255, 255, 0.65);
 }
+Show more lines
 
 /* Tablet & Desktop Enhancements */
 @media (min-width: 860px) {
@@ -760,11 +762,11 @@ textarea#message-input:focus {
   .step-num {
     width: 24px;
     height: 24px;
-    font-size: 12px;
+    font-size: 17px;
   }
 
   .step-text {
-    font-size: 14px;
+    font-size: 17px;
   }
 
   .main-content {
@@ -812,7 +814,7 @@ textarea#message-input:focus {
 
   .hero-copy p {
     margin: 0;
-    font-size: 14px;
+    font-size: 17px;
     line-height: 1.4;
     color: #e0eee8;
   }
@@ -842,7 +844,7 @@ textarea#message-input:focus {
 
 .feedback-prompt {
   margin: 0 0 6px;
-  font-size: 11.5px;
+  font-size: 17px;
   color: var(--muted);
   font-weight: 600;
 }
@@ -864,7 +866,7 @@ textarea#message-input:focus {
   border-radius: 8px;
   background: #ffffff;
   color: var(--ink);
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -912,7 +914,7 @@ textarea#message-input:focus {
 .feedback-form label {
   display: block;
   margin: 6px 0 3px;
-  font-size: 11px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--muted);
   text-transform: uppercase;
@@ -925,27 +927,28 @@ textarea#message-input:focus {
   border: 1px solid #cbd5e1;
   border-radius: 6px;
   font: inherit;
-  font-size: 12.5px;
+  font-size: 17px;
   color: var(--ink);
   background: #ffffff;
   resize: vertical;
 }
 
 .feedback-form textarea:focus {
-  outline: none;
+  outline: 2px solid var(--brand);
+  outline-offset: 2px;
   border-color: var(--green);
 }
 
 .feedback-warning {
   margin: 5px 0 8px;
-  font-size: 11px;
+  font-size: 17px;
   color: var(--muted);
   line-height: 1.35;
 }
 
 .feedback-status {
   margin: 6px 0 0;
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 600;
   line-height: 1.4;
 }
@@ -978,7 +981,7 @@ textarea#message-input:focus {
 
 .mentor-callout-text {
   margin: 0;
-  font-size: 14px;
+  font-size: 17px;
   line-height: 1.45;
   color: #062b1e;
   font-weight: 700;
@@ -994,7 +997,7 @@ textarea#message-input:focus {
   background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: #ffffff;
   border: none;
-  font-size: 13.5px;
+  font-size: 17px;
   font-weight: 800;
   padding: 9px 20px;
   border-radius: 22px;
@@ -1036,7 +1039,7 @@ textarea#message-input:focus {
   border-radius: 999px;
   color: #a7f3d0;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 17px;
   font-weight: 700;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
@@ -1044,6 +1047,7 @@ textarea#message-input:focus {
   transition: all 0.2s ease;
   opacity: 0.82;
 }
+Show more lines
 
 .admin-fab:hover {
   opacity: 1;
@@ -1078,7 +1082,7 @@ button, input, select, textarea, .step-btn, .quiet-button, .admin-fab {
 }
 
 button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
-  outline: 2px solid var(--ces-gold, #f5a81c);
+  outline: 2px solid var(--brand);
   outline-offset: 2px;
 }
 
