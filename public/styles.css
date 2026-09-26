@@ -106,7 +106,7 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  height: 38px;
+  height: 44px; /* ECC touch target, was 38px */
   padding: 2px 4px;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -207,7 +207,7 @@ html, body {
 }
 
 .handshake-btn:hover {
-  background: #004d35;
+  background: var(--brand-hover, #00503a); /* ECC token, was raw #004d35 */
   transform: translateY(-1px);
   box-shadow: var(--shadow-card);
 }
@@ -429,7 +429,7 @@ html, body {
 
 .voice-hint {
   font-size: 17px;
-  color: #047857;
+  color: var(--brand); /* was raw #047857 */
   font-weight: 600;
 }
 
@@ -688,7 +688,7 @@ textarea#message-input:focus {
 }
 
 .composer button:hover {
-  background: #004d35;
+  background: var(--brand-hover, #00503a); /* ECC token, was raw #004d35 */
 }
 
 .composer button:active {
@@ -873,7 +873,7 @@ textarea#message-input:focus {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  min-height: 28px;
+  min-height: 44px; /* ECC touch target, was 28px */
   padding: 4px 10px;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -910,7 +910,7 @@ textarea#message-input:focus {
 }
 
 .feedback-submit:hover:not(:disabled) {
-  background: #004d35;
+  background: var(--brand-hover, #00503a); /* ECC token, was raw #004d35 */
   color: #ffffff;
 }
 
@@ -935,14 +935,17 @@ textarea#message-input:focus {
 }
 
 .feedback-form textarea {
+  /* ECC text field standard: input fill, 2px #64748b border, 44px minimum, brand focus ring.
+     Was 1px border, 6px radius, white fill, which the runtime audit does not measure. */
   width: 100%;
-  padding: 7px 9px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 2px solid var(--input-border);
+  border-radius: var(--radius-md);
   font: inherit;
   font-size: 17px;
   color: var(--ink);
-  background: var(--surface);
+  background: var(--input-fill);
   resize: vertical;
 }
 
@@ -1021,7 +1024,7 @@ textarea#message-input:focus {
 }
 
 .mentor-callout-btn:hover {
-  background: #004d35;
+  background: var(--brand-hover, #00503a); /* ECC token, was raw #004d35 */
   transform: translateY(-2px);
   box-shadow: var(--shadow-card);
 }
