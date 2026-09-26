@@ -1,15 +1,14 @@
 :root {
-  --green: #006b4e;
-  --green-deep: #004937;
-  --green-darker: #003628;
-  --gold: #f7b619;
-  --ink: #092a20;
-  --muted: #577369;
-  --paper: #ffffff;
-  --bubble-ai: #edf5f1;
-  --line: #e2ece7;
+  --green: var(--brand);
+  --green-deep: var(--brand);
+  --green-darker: var(--ink);
+  --gold: var(--accent-gold);
+  --muted: var(--ink-muted);
+  --paper: var(--surface);
+  --bubble-ai: var(--surface);
+  --line: var(--border);
   --shadow: 0 12px 36px rgba(0, 35, 25, 0.22);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Montserrat", system-ui, sans-serif;
 }
 
 * {
@@ -34,7 +33,6 @@ html, body {
   padding: 0 var(--gutter);
   box-sizing: border-box;
 }
-Show more lines
 
 /* Header */
 .topbar {
@@ -51,7 +49,12 @@ Show more lines
 }
 
 .brand {
-  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  min-height: 44px;
+  color: var(--brand);
   text-decoration: none;
   font-size: 20px;
   font-weight: 800;
@@ -70,9 +73,9 @@ Show more lines
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
+  border: 2px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--brand);
   padding: 6px 12px;
   border-radius: 16px;
   font-size: 17px;
@@ -83,8 +86,8 @@ Show more lines
 }
 
 .quiet-button:hover, .quiet-button:active {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: var(--surface-sunken);
+  border-color: var(--brand);
 }
 
 /* Compact 4-Step Prep Navigation */
@@ -105,10 +108,10 @@ Show more lines
   gap: 5px;
   height: 38px;
   padding: 2px 4px;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid var(--border);
   border-radius: 10px;
-  background: rgba(0, 38, 28, 0.35);
-  color: #e3efe9;
+  background: var(--surface);
+  color: var(--ink);
   font: inherit;
   cursor: pointer;
   transition: all 0.18s ease;
@@ -123,8 +126,8 @@ Show more lines
   border-radius: 50%;
   font-size: 17px;
   font-weight: 800;
-  color: #ffffff;
-  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  color: var(--ink);
+  border: 1.5px solid var(--border);
   transition: all 0.18s ease;
 }
 
@@ -137,24 +140,24 @@ Show more lines
 }
 
 .step-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.45);
+  background: var(--surface-sunken);
+  border-color: var(--input-border);
 }
 
 .step-btn.active {
-  background: rgba(255, 255, 255, 0.16);
-  border-color: var(--gold);
-  box-shadow: 0 2px 8px rgba(247, 182, 25, 0.2);
+  background: var(--brand-tint, #e6f0ec);
+  border: 2px solid var(--brand);
+  box-shadow: var(--shadow-card);
 }
 
 .step-btn.active .step-num {
-  background: var(--gold);
-  color: var(--green-darker);
-  border-color: var(--gold);
+  background: var(--brand);
+  color: var(--surface);
+  border-color: var(--brand);
 }
 
 .step-btn.active .step-text {
-  color: #ffffff;
+  color: var(--brand);
 }
 
 /* Handshake Research Banner */
@@ -165,8 +168,8 @@ Show more lines
   gap: 10px;
   margin: 0 12px 10px;
   padding: 8px 14px;
-  background: rgba(0, 36, 26, 0.45);
-  border: 1px solid rgba(247, 182, 25, 0.35);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   backdrop-filter: blur(8px);
   text-align: center;
@@ -176,7 +179,7 @@ Show more lines
 .handshake-text {
   font-size: 17px;
   font-weight: 600;
-  color: #e3efe9;
+  color: var(--ink);
   letter-spacing: -0.2px;
 }
 
@@ -191,8 +194,8 @@ Show more lines
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--gold);
-  color: var(--green-darker);
+  background: var(--brand);
+  color: var(--surface);
   font-size: 17px;
   font-weight: 700;
   padding: 6px 14px;
@@ -200,12 +203,13 @@ Show more lines
   text-decoration: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
   transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  min-height: 44px;
 }
 
 .handshake-btn:hover {
-  background: #ffc433;
+  background: #004d35;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(247, 182, 25, 0.35);
+  box-shadow: var(--shadow-card);
 }
 
 .handshake-btn:active {
@@ -213,14 +217,15 @@ Show more lines
 }
 
 .handshake-btn-secondary {
-  background: #ffffff;
-  color: var(--green-darker);
-  border: 1px solid rgba(247, 182, 25, 0.6);
+  background: var(--surface);
+  color: var(--brand);
+  border: 2px solid var(--border-strong);
+  min-height: 44px;
 }
 
 .handshake-btn-secondary:hover {
-  background: #fdf6e2;
-  border-color: var(--gold);
+  background: var(--surface-sunken);
+  border-color: var(--brand);
 }
 
 /* Main Content Workspace */
@@ -241,7 +246,7 @@ Show more lines
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: var(--paper);
+  background: var(--surface);
   color: var(--ink);
   border-radius: 18px;
   box-shadow: var(--shadow);
@@ -255,7 +260,7 @@ Show more lines
   gap: 10px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--line);
-  background: #fbfdfc;
+  background: var(--surface);
 }
 
 .coach-head img {
@@ -263,7 +268,7 @@ Show more lines
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--green);
+  border: 2px solid var(--brand);
 }
 
 .coach-info {
@@ -289,11 +294,11 @@ Show more lines
 .status {
   font-size: 17px;
   font-weight: 700;
-  color: var(--green);
-  background: #edf7f2;
+  color: var(--brand);
+  background: var(--surface-sunken);
   padding: 4px 9px;
   border-radius: 12px;
-  border: 1px solid #cbe6db;
+  border: 1px solid var(--border);
 }
 
 /* Messages */
@@ -320,15 +325,15 @@ Show more lines
 }
 
 .message.assistant {
-  background: var(--bubble-ai);
+  background: var(--surface);
   color: var(--ink);
   align-self: flex-start;
   border-top-left-radius: 4px;
-  border: 1px solid #e1eee7;
+  border: 1px solid var(--border);
 }
 
 .message.user {
-  background: var(--green);
+  background: var(--brand);
   color: #ffffff;
   align-self: flex-end;
   border-top-right-radius: 4px;
@@ -353,38 +358,41 @@ Show more lines
 
 .suggestions {
   display: flex;
-  gap: 7px;
-  flex-wrap: nowrap;
+  gap: 8px;
+  flex-wrap: wrap;
+  min-width: 0;
 }
 
 .suggestions button {
-  border: 1px solid #9dc4b6;
+  border: 1px solid var(--border);
   border-radius: 16px;
-  background: #f7faf8;
-  color: var(--green-deep);
-  padding: 7px 12px;
+  background: var(--surface);
+  color: var(--brand);
+  padding: 10px 16px;
+  min-height: 44px;
+  max-width: 100%;
   font: inherit;
   font-size: 17px;
   font-weight: 600;
-  white-space: nowrap;
-  flex-shrink: 0;
+  white-space: normal;
+  text-align: left;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
 .suggestions button:hover, .suggestions button:active {
-  background: #eaf3ef;
-  border-color: var(--green);
+  background: var(--surface-sunken);
+  border-color: var(--brand);
 }
 
 /* Voice Practice Panel (Mode 3: Practice) */
 .voice-practice-panel {
   margin: 10px 14px 12px;
   padding: 14px 16px;
-  background: #f0fdf4;
-  border: 1.5px solid #86efac;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 14px;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.08);
+  box-shadow: var(--shadow-card);
 }
 
 .voice-practice-panel[hidden] {
@@ -413,12 +421,11 @@ Show more lines
   gap: 4px;
   font-size: 17px;
   font-weight: 800;
-  color: #065f46;
-  background: #d1fae5;
+  color: var(--brand);
+  background: var(--surface-sunken);
   padding: 4px 10px;
   border-radius: 999px;
 }
-Show more lines
 
 .voice-hint {
   font-size: 17px;
@@ -437,10 +444,10 @@ Show more lines
   gap: 6px;
   font-size: 17px;
   font-weight: 700;
-  color: #047857;
+  color: var(--brand);
   padding: 3px 8px;
-  background: #ffffff;
-  border: 1px solid #a7f3d0;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 999px;
 }
 
@@ -448,7 +455,7 @@ Show more lines
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #10b981;
+  background-color: var(--brand);
 }
 
 .mic-dot.recording {
@@ -468,8 +475,8 @@ Show more lines
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  background: #ffffff;
-  border: 1px solid #bbf7d0;
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 8px 14px;
   margin-bottom: 10px;
@@ -486,7 +493,7 @@ Show more lines
 .waveform-bar {
   width: 4px;
   height: 6px;
-  background-color: #10b981;
+  background-color: var(--brand);
   border-radius: 2px;
   transition: height 0.12s ease;
 }
@@ -504,7 +511,7 @@ Show more lines
   margin: 0;
   font-size: 17px;
   font-weight: 700;
-  color: #065f46;
+  color: var(--ink);
   white-space: nowrap;
 }
 
@@ -543,15 +550,15 @@ Show more lines
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--surface);
   font-size: 17px;
   font-weight: 800;
 }
 
 .btn-voice-record {
-  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  background: var(--brand);
   color: #ffffff;
-  border-color: #047857;
+  border-color: var(--brand);
 }
 
 .btn-voice-record:hover:not(:disabled) {
@@ -570,9 +577,9 @@ Show more lines
 }
 
 .btn-voice-send {
-  background: linear-gradient(135deg, #006b4e 0%, #004d38 100%);
+  background: var(--brand);
   color: #ffffff;
-  border-color: #003828;
+  border-color: var(--brand);
 }
 
 .btn-voice-send:hover:not(:disabled) {
@@ -590,7 +597,7 @@ Show more lines
   margin: 8px 0 0;
   font-size: 17px;
   font-weight: 600;
-  color: #065f46;
+  color: var(--brand);
   min-height: 16px;
 }
 
@@ -609,7 +616,7 @@ Show more lines
   justify-content: space-between;
   gap: 8px;
   padding: 8px 16px 4px;
-  background: #ffffff;
+  background: var(--surface);
   border-top: 1px solid var(--line);
   flex-wrap: wrap;
 }
@@ -617,7 +624,7 @@ Show more lines
 .chat-here-title {
   font-size: 17px;
   font-weight: 800;
-  color: var(--green-deep);
+  color: var(--brand);
   letter-spacing: -0.2px;
 }
 
@@ -632,8 +639,8 @@ Show more lines
   display: flex;
   align-items: flex-end;
   gap: 8px;
-  padding: 0.875rem 2rem 1.25rem; /* Mirrors .messages 2rem (32px) horizontal rail */
-  background: #ffffff;
+  padding: 0.875rem 2rem 1.25rem;
+  background: var(--surface);
 }
 
 textarea#message-input {
@@ -641,23 +648,25 @@ textarea#message-input {
   height: 44px;
   min-height: 44px;
   max-height: 90px;
-  padding: 11px 14px;
-  border: 1.5px solid #a8c7bd;
-  border-radius: 20px;
+  padding: 14px 18px;
+  border: 2px solid var(--input-border);
+  border-radius: var(--radius-lg);
   color: var(--ink);
   font: inherit;
   font-size: var(--text-body);
   line-height: 1.35;
   resize: none;
-  background: #fafcfb;
+  background: var(--input-fill);
+  box-shadow: var(--shadow-card);
+  min-width: 0;
 }
 
 textarea#message-input:focus {
   outline: 2px solid var(--brand);
   outline-offset: 2px;
-  border-color: var(--green);
-  background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(0, 107, 78, 0.15);
+  border-color: var(--input-border);
+  background: var(--surface);
+  box-shadow: var(--shadow-focus);
 }
 
 .composer button {
@@ -665,7 +674,7 @@ textarea#message-input:focus {
   padding: 0 16px;
   border: 0;
   border-radius: 22px;
-  background: var(--green);
+  background: var(--brand);
   color: #ffffff;
   font: inherit;
   font-size: 17px;
@@ -679,7 +688,7 @@ textarea#message-input:focus {
 }
 
 .composer button:hover {
-  background: var(--green-darker);
+  background: #004d35;
 }
 
 .composer button:active {
@@ -709,27 +718,27 @@ textarea#message-input:focus {
   align-items: center;
   gap: 7px;
   padding: 8px 18px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--surface);
+  border: 2px solid var(--border-strong);
   border-radius: 20px;
-  color: #ffffff;
+  color: var(--brand);
   text-decoration: none;
   font-size: 17px;
   font-weight: 600;
   transition: background 0.15s ease, border-color 0.15s ease;
+  min-height: 44px;
 }
 
 .portfolio-btn:hover, .portfolio-btn:active {
-  background: rgba(255, 255, 255, 0.22);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: var(--surface-sunken);
+  border-color: var(--brand);
 }
 
 .footer-privacy {
   margin: 0;
   font-size: 17px;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--ink-muted);
 }
-Show more lines
 
 /* Tablet & Desktop Enhancements */
 @media (min-width: 860px) {
@@ -743,6 +752,9 @@ Show more lines
 
   .brand {
     font-size: 26px;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 
   .step-nav {
@@ -787,7 +799,7 @@ Show more lines
     content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(0, 38, 28, 0.85), rgba(0, 38, 28, 0.15) 70%);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1) 70%);
   }
 
   .desktop-hero img {
@@ -816,7 +828,7 @@ Show more lines
     margin: 0;
     font-size: 17px;
     line-height: 1.4;
-    color: #e0eee8;
+    color: var(--ink);
   }
 
   .coach-panel {
@@ -830,6 +842,7 @@ Show more lines
 
   .suggestions {
     flex-wrap: wrap;
+    min-width: 0;
   }
 }
 
@@ -838,8 +851,8 @@ Show more lines
   margin-top: 8px;
   padding: 8px 10px;
   border-radius: 10px;
-  background: rgba(246, 247, 244, 0.85);
-  border: 1px solid var(--line);
+  background: var(--surface);
+  border: 1px solid var(--border);
 }
 
 .feedback-prompt {
@@ -862,9 +875,9 @@ Show more lines
   gap: 4px;
   min-height: 28px;
   padding: 4px 10px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border);
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--surface);
   color: var(--ink);
   font-size: 17px;
   font-weight: 600;
@@ -873,8 +886,8 @@ Show more lines
 }
 
 .feedback-button:hover:not(:disabled) {
-  border-color: var(--green);
-  background: #f0fdf4;
+  border-color: var(--brand);
+  background: var(--surface-sunken);
 }
 
 .feedback-button:disabled {
@@ -883,7 +896,7 @@ Show more lines
 }
 
 .feedback-up {
-  color: #15803d;
+  color: var(--brand);
 }
 
 .feedback-down {
@@ -891,13 +904,13 @@ Show more lines
 }
 
 .feedback-submit {
-  background: var(--green);
+  background: var(--brand);
   color: #ffffff;
-  border-color: var(--green);
+  border-color: var(--brand);
 }
 
 .feedback-submit:hover:not(:disabled) {
-  background: var(--green-deep);
+  background: #004d35;
   color: #ffffff;
 }
 
@@ -924,19 +937,19 @@ Show more lines
 .feedback-form textarea {
   width: 100%;
   padding: 7px 9px;
-  border: 1px solid #cbd5e1;
+  border: 1px solid var(--border);
   border-radius: 6px;
   font: inherit;
   font-size: 17px;
   color: var(--ink);
-  background: #ffffff;
+  background: var(--surface);
   resize: vertical;
 }
 
 .feedback-form textarea:focus {
   outline: 2px solid var(--brand);
   outline-offset: 2px;
-  border-color: var(--green);
+  border-color: var(--brand);
 }
 
 .feedback-warning {
@@ -954,7 +967,7 @@ Show more lines
 }
 
 .feedback-status.feedback-success {
-  color: #15803d;
+  color: var(--brand);
 }
 
 .feedback-status.feedback-error {
@@ -965,10 +978,10 @@ Show more lines
 .mentor-callout {
   margin: 16px 12px 12px;
   padding: 16px 20px;
-  background: #ffffff;
-  border: 2px solid #f97316;
+  background: var(--surface);
+  border: 2px solid var(--border);
   border-radius: 14px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22), 0 2px 12px rgba(249, 115, 22, 0.2);
+  box-shadow: var(--shadow-card);
 }
 
 .mentor-callout-content {
@@ -983,7 +996,7 @@ Show more lines
   margin: 0;
   font-size: 17px;
   line-height: 1.45;
-  color: #062b1e;
+  color: var(--ink);
   font-weight: 700;
   flex: 1;
   min-width: 250px;
@@ -993,8 +1006,7 @@ Show more lines
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  background: #ea580c;
-  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+  background: var(--brand);
   color: #ffffff;
   border: none;
   font-size: 17px;
@@ -1004,13 +1016,14 @@ Show more lines
   text-decoration: none;
   white-space: nowrap;
   transition: all 0.18s ease;
-  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.4);
+  box-shadow: var(--shadow-card);
+  min-height: 44px;
 }
 
 .mentor-callout-btn:hover {
-  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+  background: #004d35;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.55);
+  box-shadow: var(--shadow-card);
 }
 
 .mentor-callout-btn:active {
@@ -1034,20 +1047,19 @@ Show more lines
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  background: rgba(7, 21, 16, 0.85);
-  border: 1px solid rgba(74, 222, 128, 0.3);
+  background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 999px;
-  color: #a7f3d0;
+  color: var(--brand);
   text-decoration: none;
   font-size: 17px;
   font-weight: 700;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--shadow-card);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   transition: all 0.2s ease;
   opacity: 0.82;
 }
-Show more lines
 
 .admin-fab:hover {
   opacity: 1;
@@ -1065,11 +1077,11 @@ Show more lines
 /* CES Brand Versioning & WCAG 2.2 AA Interaction Enhancements */
 .ces-version-tag {
   display: inline-block;
-  font-size: var(--ces-font-size-xs, 0.75rem);
+  font-size: 17px;
   font-weight: 700;
-  color: var(--ces-gold, #f5a81c);
-  background: rgba(245, 168, 28, 0.15);
-  border: 1px solid rgba(245, 168, 28, 0.35);
+  color: var(--ink-muted);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
   border-radius: var(--ces-radius-full, 9999px);
   padding: 0.1rem 0.45rem;
   margin-left: 0.4rem;
@@ -1093,3 +1105,27 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 
+
+/* Phones: composer field takes its own row, admin link leaves the fixed overlay */
+@media (max-width: 640px) {
+  .composer {
+    flex-wrap: wrap;
+    padding: 0.875rem 12px 1.25rem;
+  }
+
+  textarea#message-input {
+    flex: 1 1 100%;
+  }
+
+  .composer button {
+    flex: 1 1 auto;
+    justify-content: center;
+  }
+
+  .admin-fab {
+    position: static;
+    width: fit-content;
+    min-height: 44px;
+    margin: 12px auto;
+  }
+}
