@@ -1,0 +1,94 @@
+/* Ensign Career Coach design tokens: GENERATED, do not edit.
+   Source: tokens/tokens.json (sha256 41a46c1ea0bca053) + tokens/overrides.json
+   Regenerate: python3 scripts/build_tokens.py */
+
+:root {
+  color-scheme: light;
+
+  /* color */
+  --brand: #006645;
+  --brand-hover: #00503a;
+  --brand-tint: #e7f3ee;
+  --brand-tint-soft: #f3faf6;
+  --accent-gold: #FDB515;
+  --ink: #0f172a;
+  --ink-muted: #475569;
+  --surface: #ffffff;
+  --surface-sunken: #f8fafc;
+  --surface-hover: #f1f5f9;
+  --border: #cbd5e1;
+  --border-strong: #94a3b8;
+  --success-bg: #dcfce7;
+  --success-border: #86efac;
+  --success-text: #166534;
+  --success-icon: #16a34a;
+  --warning-bg: #fef3c7;
+  --warning-text: #92400e;
+  --danger-text: #991b1b;
+  --muted-strong: #64748b;
+  --overlay: rgba(15,23,42,0.45);
+
+  /* type */
+  --font-sans: Montserrat, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --text-heading-lg: 21px;
+  --leading-heading-lg: 1.3;
+  --weight-heading-lg: 700;
+  --text-heading-md: 19px;
+  --leading-heading-md: 1.4;
+  --weight-heading-md: 700;
+  --text-body: 19px;
+  --leading-body: 1.6;
+  --weight-body: 400;
+  --text-body-strong: 19px;
+  --leading-body-strong: 1.6;
+  --weight-body-strong: 700;
+  --text-body-sm: 18px;
+  --leading-body-sm: 1.5;
+  --weight-body-sm: 500;
+  --text-eyebrow: 17px;
+  --leading-eyebrow: 1.4;
+  --weight-eyebrow: 700;
+  --text-control: 18px;
+  --leading-control: 1.35;
+  --weight-control: 600;
+  --text-caption: 17px;
+  --leading-caption: 1.5;
+  --weight-caption: 400;
+
+  /* spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 48px;
+
+  /* radius */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* shadow */
+  --shadow-card: 0 4px 20px rgba(15,23,42,0.08);
+  --shadow-focus: 0 0 0 3px rgba(0,102,69,0.25), 0 6px 24px rgba(15,23,42,0.12);
+  --shadow-toast: 0 12px 36px rgba(15,23,42,0.16);
+
+  /* local overrides: see tokens/overrides.json for the reason behind each */
+  --input-border: #64748b;  /* pending-upstream */
+  --input-fill: #f1f5f9;  /* rob-decision */
+  --gutter: clamp(24px, 3vw, 56px);  /* exemplar */
+  --sidebar-width: 232px;  /* exemplar */
+
+  /* fixed rules from the design system README */
+  --touch-min: 44px;
+  --text-floor: 17px;
+  --focus-ring: 2px solid var(--brand);
+  --focus-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
