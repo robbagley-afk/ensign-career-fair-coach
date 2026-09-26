@@ -1,21 +1,21 @@
 /* Admin styling for Ensign Career Fair Coach */
 :root {
-  --admin-bg: #071510;
-  --admin-surface: rgba(14, 34, 25, 0.88);
-  --admin-surface-soft: rgba(22, 48, 36, 0.9);
-  --admin-line: rgba(74, 222, 128, 0.18);
-  --admin-line-strong: rgba(74, 222, 128, 0.35);
-  --admin-text: #ecfdf5;
-  --admin-muted: #94a3b8;
-  --admin-green: #10b981;
-  --admin-gold: #f59e0b;
+  --admin-bg: var(--surface-sunken);
+  --admin-surface: var(--surface);
+  --admin-surface-soft: var(--surface-sunken);
+  --admin-line: var(--border);
+  --admin-line-strong: var(--input-border);
+  --admin-text: var(--ink);
+  --admin-muted: var(--ink-muted);
+  --admin-green: var(--brand);
+  --admin-gold: var(--brand);
   --admin-red: #f43f5e;
 }
 
 body.admin-body {
-  background: var(--admin-bg);
-  color: var(--admin-text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--surface-sunken);
+  color: var(--ink);
+  font-family: "Montserrat", system-ui, sans-serif;
   margin: 0;
   padding: 24px 16px;
   min-height: 100vh;
@@ -45,10 +45,13 @@ body.admin-body {
 }
 
 .nav-link {
+  display: inline-flex;
+  align-items: center;
   color: var(--admin-green);
   text-decoration: none;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 600;
+  min-height: 44px;
 }
 
 .nav-link:hover {
@@ -58,12 +61,12 @@ body.admin-body {
 .admin-header h1 {
   margin: 4px 0 6px;
   font-size: 26px;
-  color: #ffffff;
+  color: var(--ink);
 }
 
 .admin-header p {
   margin: 0;
-  font-size: 13.5px;
+  font-size: 17px;
   color: var(--admin-muted);
 }
 
@@ -75,7 +78,7 @@ body.admin-body {
   background: var(--admin-surface);
   border: 1px solid var(--admin-line);
   border-radius: 999px;
-  font-size: 12.5px;
+  font-size: 17px;
 }
 
 .status-dot {
@@ -85,8 +88,8 @@ body.admin-body {
   display: inline-block;
 }
 
-.status-dot.checking { background: #eab308; }
-.status-dot.online { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+.status-dot.checking { background: var(--brand); }
+.status-dot.online { background: var(--brand); box-shadow: 0 0 8px var(--brand); }
 
 .admin-login,
 .admin-toolbar,
@@ -108,13 +111,13 @@ body.admin-body {
 .review-section h2 {
   margin: 0 0 8px;
   font-size: 20px;
-  color: #ffffff;
+  color: var(--ink);
 }
 
 .admin-login p,
 .section-heading p {
   margin: 0;
-  font-size: 13px;
+  font-size: 17px;
   color: var(--admin-muted);
   line-height: 1.5;
 }
@@ -127,8 +130,8 @@ body.admin-body {
 .review-form label {
   display: block;
   margin-bottom: 6px;
-  color: #cbd5e1;
-  font-size: 12px;
+  color: var(--ink-muted);
+  font-size: 17px;
   font-weight: 700;
 }
 
@@ -147,9 +150,9 @@ body.admin-body {
   border: 1px solid var(--admin-line-strong);
   border-radius: 8px;
   color: var(--admin-text);
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--input-fill);
   font-family: inherit;
-  font-size: 13px;
+  font-size: 17px;
   line-height: 1.45;
 }
 
@@ -167,7 +170,7 @@ body.admin-body {
   min-height: 38px;
   padding: 8px 16px;
   border-radius: 8px;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -179,8 +182,8 @@ body.admin-body {
 
 .primary-admin-btn {
   border: none;
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-  color: #042f1f;
+  background: var(--brand);
+  color: var(--surface);
   font-weight: 800;
 }
 
@@ -192,18 +195,18 @@ body.admin-body {
 .secondary-admin-btn {
   border: 1px solid var(--admin-line);
   background: var(--admin-surface-soft);
-  color: #e2e8f0;
+  color: var(--ink);
 }
 
 .secondary-admin-btn:hover:not(:disabled) {
   border-color: var(--admin-line-strong);
-  background: rgba(30, 64, 48, 0.95);
+  background: var(--surface);
 }
 
 .danger-admin-btn {
   border: 1px solid rgba(244, 63, 94, 0.35);
   background: rgba(244, 63, 94, 0.15);
-  color: #fecdd3;
+  color: var(--ink);
 }
 
 .danger-admin-btn:hover:not(:disabled) {
@@ -238,7 +241,7 @@ body.admin-body {
 
 .admin-toolbar > p {
   margin: 0;
-  font-size: 13px;
+  font-size: 17px;
   color: var(--admin-muted);
 }
 
@@ -258,12 +261,12 @@ body.admin-body {
   padding: 14px 16px;
   border: 1px solid var(--admin-line);
   border-radius: 12px;
-  background: rgba(16, 38, 28, 0.75);
+  background: var(--surface);
 }
 
 .score-card span {
   display: block;
-  font-size: 11.5px;
+  font-size: 17px;
   color: var(--admin-muted);
   font-weight: 700;
   text-transform: uppercase;
@@ -274,7 +277,7 @@ body.admin-body {
   display: block;
   margin-top: 6px;
   font-size: 24px;
-  color: #ffffff;
+  color: var(--ink);
 }
 
 .score-card.score-primary strong {
@@ -284,12 +287,12 @@ body.admin-body {
 .admin-live-status {
   min-height: 1.25rem;
   margin: 12px 0 0;
-  font-size: 13px;
+  font-size: 17px;
   color: var(--admin-muted);
 }
 
-.admin-live-status.success { color: #6ee7b7; font-weight: 600; }
-.admin-live-status.error { color: #fca5a5; font-weight: 600; }
+.admin-live-status.success { color: var(--brand); font-weight: 600; }
+.admin-live-status.error { color: var(--ink); font-weight: 600; }
 
 .review-section {
   margin-top: 20px;
@@ -313,7 +316,7 @@ body.admin-body {
   border: 1px dashed var(--admin-line-strong);
   border-radius: 10px;
   color: var(--admin-muted);
-  font-size: 13px;
+  font-size: 17px;
   text-align: center;
 }
 
@@ -321,7 +324,7 @@ body.admin-body {
   padding: 16px;
   border: 1px solid var(--admin-line);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface);
 }
 
 .review-item-header {
@@ -333,47 +336,47 @@ body.admin-body {
 
 .review-kicker {
   margin: 0;
-  font-size: 13px;
+  font-size: 17px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--ink);
 }
 
 .review-meta {
   margin: 4px 0 0;
-  font-size: 11.5px;
+  font-size: 17px;
   color: var(--admin-muted);
 }
 
 .review-status-badge {
   padding: 3px 9px;
   border-radius: 999px;
-  font-size: 11px;
+  font-size: 17px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .review-status-badge.positive {
-  background: rgba(16, 185, 129, 0.2);
-  color: #6ee7b7;
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--brand);
   border: 1px solid rgba(16, 185, 129, 0.35);
 }
 
 .review-status-badge.pending {
-  background: rgba(245, 158, 11, 0.2);
-  color: #fcd34d;
-  border: 1px solid rgba(245, 158, 11, 0.35);
+  background: rgba(0, 102, 69, 0.1);
+  color: var(--brand);
+  border: 1px solid var(--border);
 }
 
 .review-status-badge.approved {
   background: rgba(59, 130, 246, 0.2);
-  color: #93c5fd;
+  color: var(--ink);
   border: 1px solid rgba(59, 130, 246, 0.35);
 }
 
 .review-status-badge.rejected {
   background: rgba(244, 63, 94, 0.2);
-  color: #fca5a5;
+  color: var(--ink);
   border: 1px solid rgba(244, 63, 94, 0.35);
 }
 
@@ -384,7 +387,7 @@ body.admin-body {
 }
 
 .review-fields dt {
-  font-size: 11px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--admin-muted);
   text-transform: uppercase;
@@ -392,9 +395,9 @@ body.admin-body {
 
 .review-fields dd {
   margin: 0 0 8px;
-  font-size: 13px;
-  color: #e2e8f0;
-  background: rgba(0, 0, 0, 0.2);
+  font-size: 17px;
+  color: var(--ink);
+  background: var(--surface-sunken);
   padding: 8px 10px;
   border-radius: 6px;
   white-space: pre-wrap;
@@ -408,8 +411,8 @@ body.admin-body {
 }
 
 .review-form textarea[readonly] {
-  background: rgba(0, 0, 0, 0.35);
-  color: #94a3b8;
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
 }
 
 .review-actions {
@@ -420,7 +423,7 @@ body.admin-body {
 
 .review-copy {
   margin: 10px 0 0;
-  font-size: 13px;
-  color: #e2e8f0;
+  font-size: 17px;
+  color: var(--ink);
   line-height: 1.5;
 }

@@ -6,9 +6,16 @@
     <meta name="theme-color" content="#004937" />
     <title>Career Fair Coach v1.0 — Ensign College Career Services</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="ces-tokens.css" />
     <link rel="stylesheet" href="ces-components.css" />
-    <link rel="stylesheet" href="styles.css?v=standard-v1.0" />
+    <link rel="stylesheet" href="ecc-tokens.css" />
+    <link rel="stylesheet" href="ecc-ces-compat.css" />
+    <link rel="stylesheet" href="ecc-components.base.css" />
+    <link rel="stylesheet" href="ecc-app.css" />
+    <link rel="stylesheet" href="styles.css?v=ecc-1" />
     <!-- Vercel Web Analytics -->
     <script>
       window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
@@ -101,7 +108,7 @@
           <div id="voice-practice-panel" class="voice-practice-panel" hidden>
             <div class="voice-panel-header">
               <div class="voice-panel-title-row">
-                <span class="voice-badge">🎤 Voice Pitch Practice</span>
+                <span class="voice-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M19 10a7 7 0 0 1-14 0"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg> Voice Pitch Practice</span>
                 <span class="voice-hint">Record your "Me in 30 Seconds" or type below</span>
               </div>
               <div class="voice-status-badges">
@@ -151,7 +158,7 @@
           </div>
 
           <div class="chat-here-bar">
-            <span class="chat-here-title">💬 Chat Here</span>
+            <span class="chat-here-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> Chat Here</span>
             <span class="chat-here-hint">Type your message or edit transcribed voice pitch</span>
           </div>
           <form id="chat-form" class="composer">
