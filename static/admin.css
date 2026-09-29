@@ -429,3 +429,5 @@ body.admin-body {
   color: var(--ink);
   line-height: 1.5;
 }
+/* ECC: form controls do not inherit font by default, so they rendered in Arial */
+button, input, select, textarea { font-family: inherit; }

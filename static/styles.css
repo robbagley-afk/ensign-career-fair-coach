@@ -63,7 +63,7 @@ html, body {
 
 .brand-sub {
   font-size: 17px;
-  color: var(--gold);
+  color: var(--ink-muted); /* ECC: gold is identity-only and was 1.70:1 on white */
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -1040,13 +1040,13 @@ textarea#message-input:focus {
   }
 }
 
-/* Floating Admin Review Button (Bottom Right) */
+/* Staff Admin link, below the footer */
 .admin-fab {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 999;
-  display: inline-flex;
+  position: static; /* ECC: fixed bottom-right covered the composer's Send button at desktop widths */
+  display: flex;
+  width: fit-content;
+  min-height: var(--touch-min, 44px);
+  margin: 8px auto 16px;
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
@@ -1058,23 +1058,16 @@ textarea#message-input:focus {
   font-size: 17px;
   font-weight: 700;
   box-shadow: var(--shadow-card);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  transition: all 0.2s ease;
-  opacity: 0.82;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .admin-fab:hover {
-  opacity: 1;
-  background: rgba(14, 34, 25, 0.95);
-  border-color: #10b981;
-  color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+  background: var(--brand-tint-soft); /* ECC: replaces the dark-theme hover */
+  border-color: var(--brand);
 }
 
 .admin-fab:active {
-  transform: translateY(0);
+  background: var(--brand-tint);
 }
 
 /* CES Brand Versioning & WCAG 2.2 AA Interaction Enhancements */
@@ -1132,3 +1125,5 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
     margin: 12px auto;
   }
 }
+/* ECC: form controls do not inherit font by default, so they rendered in Arial */
+button, input, select, textarea { font-family: inherit; }
