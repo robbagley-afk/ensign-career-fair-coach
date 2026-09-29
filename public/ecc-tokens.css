@@ -78,6 +78,7 @@
 
   /* local overrides: see tokens/overrides.json for the reason behind each */
   --input-border: #64748b;  /* pending-upstream */
+  --border-strong: #64748b;  /* pending-upstream */
   --input-fill: #f1f5f9;  /* rob-decision */
   --gutter: clamp(24px, 3vw, 56px);  /* exemplar */
   --sidebar-width: 232px;  /* exemplar */
