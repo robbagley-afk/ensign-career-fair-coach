@@ -1,0 +1,71 @@
+/* CES -> ECC compatibility layer.
+   Every app vendors the same ces-tokens.css v1.1 (14 identical copies, md5 312bc116...).
+   Load this file AFTER ces-tokens.css and ecc-tokens.css: it re-points the old --ces-* names
+   at Ensign Career Coach values, so existing app CSS moves to the new system with no selector edits.
+   Delete an alias once no app CSS references it (scripts/ecc_audit_static.py reports usage). */
+
+:root {
+  /* brand: navy/gold UI roles become Ensign green; gold is identity-only in ECC */
+  --ces-navy-950: var(--ink);
+  --ces-navy-900: var(--brand);
+  --ces-navy-850: var(--brand-hover);
+  --ces-navy-800: var(--brand-hover);
+  --ces-navy-700: var(--brand);
+  --ces-navy-600: var(--brand);
+  --ces-navy-100: var(--brand-tint);
+  --ces-navy-50:  var(--brand-tint-soft);
+
+  --ces-gold:        var(--brand);        /* was used for active borders and pills: that is brand's job now */
+  --ces-gold-hover:  var(--brand-hover);
+  --ces-gold-light:  var(--brand-tint-soft);
+  --ces-gold-border: var(--border-strong);
+
+  /* surface and text */
+  --ces-ink:         var(--ink);
+  --ces-ink-soft:    var(--ink);
+  --ces-muted:       var(--ink-muted);
+  --ces-muted-light: var(--ink-muted);    /* ECC allows two text colors only */
+  --ces-line:        var(--border);
+  --ces-line-soft:   var(--border);
+  --ces-surface:     var(--surface);
+  --ces-background:  var(--surface-sunken);
+
+  /* status: ECC pairs */
+  --ces-status-success-bg: var(--success-bg);
+  --ces-status-success-text: var(--success-text);
+  --ces-status-success-border: var(--success-border);
+  --ces-status-warning-bg: var(--warning-bg);
+  --ces-status-warning-text: var(--warning-text);
+  --ces-status-error-text: var(--danger-text);
+
+  /* focus: one ring, brand green, everywhere (fixes the 1.7:1 gold ring on light fields) */
+  --ces-focus-ring-dark:  var(--brand);
+  --ces-focus-ring-light: var(--brand);
+  --ces-focus-ring:       var(--brand);
+
+  /* type: Montserrat, 17px floor */
+  --ces-font-body:  var(--font-sans);
+  --ces-font-serif: var(--font-sans);
+  --ces-text-xs:    var(--text-caption);   /* 12px -> 17px */
+  --ces-text-sm:    var(--text-caption);   /* 14px -> 17px */
+  --ces-text-base:  var(--text-body);      /* 15px -> 19px */
+  --ces-text-lg:    var(--text-heading-md);
+  --ces-text-xl:    var(--text-heading-lg);
+  --ces-text-2xl:   var(--text-heading-lg);
+  --ces-weight-semibold: 600;
+  --ces-weight-bold: 700;
+  --ces-weight-extrabold: 700;             /* Montserrat is loaded at 400-700 only */
+
+  /* elevation and shape */
+  --ces-shadow-sm: var(--shadow-card);
+  --ces-shadow-md: var(--shadow-card);
+  --ces-shadow-lg: var(--shadow-toast);
+  --ces-radius-sm: var(--radius-sm);
+  --ces-radius-md: var(--radius-md);
+  --ces-radius-lg: var(--radius-lg);
+  --ces-radius-pill: var(--radius-pill);
+
+  /* layout: fill the width to the gutter instead of a fixed content cap */
+  --ces-content-max: 100%;
+  --ces-prose-max-width: none;
+}

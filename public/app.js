@@ -540,7 +540,7 @@ if (btnVoiceSend) {
     const textToSend = input.value.trim() || lastTranscribedText.trim();
     if (textToSend) {
       input.value = '';
-      input.style.height = '44px';
+      input.style.height = '58px';
       btnVoiceSend.disabled = true;
       voiceStatusText.textContent = '';
       submitMessage(textToSend);
@@ -578,7 +578,7 @@ form.addEventListener('submit', async (event) => {
   const message = input.value.trim();
   if (!message) return;
   input.value = '';
-  input.style.height = '44px';
+  input.style.height = '58px';
   await submitMessage(message);
 });
 
@@ -590,8 +590,8 @@ input.addEventListener('keydown', (event) => {
 });
 
 input.addEventListener('input', () => {
-  input.style.height = '44px';
-  if (input.scrollHeight > 44) {
+  input.style.height = '58px';
+  if (input.scrollHeight > 58) {
     input.style.height = `${Math.min(input.scrollHeight, 90)}px`;
   }
   if (btnVoiceSend && mode === 'practice') {

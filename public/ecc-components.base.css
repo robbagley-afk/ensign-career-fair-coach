@@ -1,0 +1,114 @@
+/* Ensign Career Coach — component styles. Reads tokens.css custom properties only. */
+
+.ecc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.35;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+}
+.ecc-btn-primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+.ecc-btn-primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
+.ecc-btn-secondary { background: var(--surface); color: var(--ink); border-color: var(--border-strong); }
+.ecc-btn-secondary:hover { border-color: var(--brand); color: var(--brand); }
+.ecc-btn-ghost { background: transparent; border-color: transparent; color: var(--brand); padding: 0 4px; text-decoration: underline; text-underline-offset: 3px; }
+.ecc-btn:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+.ecc-btn[disabled] { background: var(--muted-strong); border-color: var(--muted-strong); color: #fff; cursor: not-allowed; }
+
+.ecc-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 600;
+  border: 1.5px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+}
+.ecc-pill-success { background: var(--success-bg); border-color: var(--success-border); color: var(--success-text); }
+.ecc-pill-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+.ecc-pill-success .ecc-pill-dot { background: var(--success-icon); }
+
+.ecc-card {
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-5);
+  max-width: 560px;
+}
+.ecc-card-title {
+  margin: 0 0 var(--space-2);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--brand);
+}
+.ecc-card-body { font-family: var(--font-sans); font-size: 19px; line-height: 1.6; color: var(--ink); margin: 0; }
+
+.ecc-chip {
+  flex-shrink: 0;
+  white-space: nowrap;
+  min-height: 44px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.35;
+  cursor: pointer;
+}
+.ecc-chip:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-tint-soft); }
+.ecc-chip:active { background: var(--brand-tint); }
+.ecc-chip:focus-visible { outline: 2px solid var(--brand); outline-offset: 2px; }
+
+.ecc-nav-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: 52px;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  text-align: left;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+.ecc-nav-item:hover { border-color: var(--brand); }
+.ecc-nav-item.is-active { background: var(--brand-tint); border-color: var(--brand); }
+.ecc-nav-item-badge {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 700;
+  background: var(--surface-hover);
+  color: var(--ink);
+}
+.ecc-nav-item.is-active .ecc-nav-item-badge { background: var(--brand); color: #fff; }
+.ecc-nav-item-title { font-size: 18px; font-weight: 600; line-height: 1.3; }
+
+.ecc-row { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
