@@ -164,6 +164,8 @@ body.admin-body {
   border-color: var(--admin-line-strong);
   outline: 2px solid var(--brand); /* ECC focus ring, was translucent emerald */
   outline-offset: 2px;
+  background: var(--surface); /* ECC field spec: white fill and focus shadow on focus */
+  box-shadow: var(--shadow-focus);
 }
 
 .primary-admin-btn,

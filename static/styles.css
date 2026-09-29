@@ -551,6 +551,7 @@ html, body {
   height: 18px;
   border-radius: 50%;
   background: var(--surface);
+  color: var(--brand); /* ECC: the button text is white, so the badge needs its own color */
   font-size: 17px;
   font-weight: 800;
 }
@@ -645,8 +646,8 @@ html, body {
 
 textarea#message-input {
   flex: 1;
-  height: 44px;
-  min-height: 44px;
+  height: 58px; /* 19px x 1.35 line + 28px padding + 4px border; app.js resets to this */
+  min-height: 58px;
   max-height: 90px;
   padding: 14px 18px;
   border: 2px solid var(--input-border);
@@ -953,6 +954,8 @@ textarea#message-input:focus {
   outline: 2px solid var(--brand);
   outline-offset: 2px;
   border-color: var(--brand);
+  background: var(--surface); /* ECC field spec: white fill and focus shadow on focus */
+  box-shadow: var(--shadow-focus);
 }
 
 .feedback-warning {
