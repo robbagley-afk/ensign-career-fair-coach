@@ -23,10 +23,10 @@ We are starting specifically with **Career Fair Coach** as the pilot app for thi
 
 ### Workspace Locations on Mac Studio
 - **Career Fair Coach (Standalone)**: `/Users/robbagley/CCowork-Local-Apps/ensign-career-fair-coach`
-  - GitHub: `https://github.com/robbagley-afk/ensign-career-fair-coach` (main branch)
+  - GitHub: `https://github.com/robbagley-dev/ensign-career-fair-coach` (main branch)
   - Vercel Deployment ready: both `static/` and `public/` directories must always stay strictly in sync.
 - **Monorepo**: `/Users/robbagley/CCowork-Local-Apps/AI AGENTS LOCAL LLM`
-  - GitHub: `https://github.com/robbagley-afk/ai-agents-local-llm` (main branch)
+  - GitHub: `https://github.com/robbagley-dev/ai-agents-local-llm` (main branch)
   - Career Fair Coach directory inside monorepo: `Corey - Ensign Career Fair Coach/`
 - **Active Port**: `http://127.0.0.1:5040/` (Reverse proxy on Tailscale Funnel at `/career-fair/`)
 
