@@ -164,3 +164,368 @@ input.ecc-field { border-radius: var(--radius-md); resize: none; } /* single-lin
   .ecc-field:focus-visible, .ecc-composer textarea:focus-visible { outline-color: Highlight; }
   .ecc-pill, .ecc-chip { border-color: ButtonText; }
 }
+
+/* ECC dashboard pattern. Authored with Coding Helper. */
+
+/* ── Dashboard shell ─────────────────────────────────────────────── */
+.ecc-dash {
+  box-sizing: border-box;
+  width: 100%;
+  padding-inline: var(--gutter);
+  padding-block: var(--space-6) var(--space-7);
+  background: var(--surface-sunken);
+}
+
+/* ── Dashboard header ────────────────────────────────────────────── */
+.ecc-dash__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-block-end: var(--space-6);
+  min-width: 0;
+}
+
+.ecc-dash__titles {
+  flex: 1 1 min(100%, 480px);
+  min-width: 0;
+}
+
+.ecc-dash__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading-lg);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0 0 var(--space-2);
+  overflow-wrap: anywhere;
+}
+
+.ecc-dash__subtitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: var(--leading-body);
+  color: var(--ink-muted);
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ── Metrics strip ───────────────────────────────────────────────── */
+.ecc-dash__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.ecc-dash__metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  min-width: 0;
+}
+
+.ecc-dash__metric-value {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading-md);
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.ecc-dash__metric-label {
+  font-family: var(--font-sans);
+  font-size: max(17px, var(--text-caption));
+  font-weight: 500;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+/* ── Section ─────────────────────────────────────────────────────── */
+.ecc-dash-section {
+  margin-block-end: var(--space-7);
+  min-width: 0;
+}
+
+.ecc-dash-section__heading-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+  margin-block-end: var(--space-3);
+  min-width: 0;
+}
+
+.ecc-dash-section__heading {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading-md);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.ecc-dash-section__count {
+  font-family: var(--font-sans);
+  font-size: max(17px, var(--text-caption));
+  font-weight: 500;
+  color: var(--ink-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.ecc-dash-section__rule {
+  border: none;
+  border-block-start: 1px solid var(--brand);
+  margin: 0 0 var(--space-4);
+}
+
+/* ── Grid ────────────────────────────────────────────────────────── */
+.ecc-dash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.ecc-dash-grid > * {
+  min-width: 0;
+}
+
+/* ── Tool card ───────────────────────────────────────────────────── */
+.ecc-tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: var(--space-4);
+  min-width: 0;
+}
+
+/* icon */
+.ecc-tool-card__icon {
+  display: flex;
+  align-items: center;
+  color: var(--ink-muted);
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.ecc-tool-card__icon svg {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
+/* status badge */
+.ecc-tool-card__status {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  font-family: var(--font-sans);
+  font-size: max(17px, var(--text-caption));
+  font-weight: 600;
+  line-height: 1;
+  border-radius: var(--radius-pill);
+  padding: 4px var(--space-3);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.ecc-tool-card__status--success {
+  background: var(--success-bg);
+  color: var(--success-text);
+  border: 1px solid var(--success-border);
+}
+
+.ecc-tool-card__status--preview {
+  background: var(--brand-tint);
+  color: var(--brand);
+  border: 1px solid var(--border-strong);
+}
+
+/* card body */
+.ecc-tool-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.ecc-tool-card__body > * {
+  min-width: 0;
+}
+
+.ecc-tool-card__title {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading-md);
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.ecc-tool-card__description {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 400;
+  color: var(--ink-muted);
+  margin: 0;
+  line-height: var(--leading-body);
+  overflow-wrap: anywhere;
+}
+
+/* primary action link — 44 px touch target, all states */
+.ecc-tool-card__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  margin-block-start: auto;
+  min-height: var(--touch-min, 44px);
+  padding-inline: var(--space-4);
+  padding-block: var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--brand);
+  color: var(--surface);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  min-width: 0;
+  transition: background 0.14s ease, border-color 0.14s ease;
+}
+
+.ecc-tool-card__action:hover {
+  background: var(--brand-hover);
+}
+
+.ecc-tool-card__action:active {
+  background: var(--brand-hover);
+  filter: brightness(0.9);
+}
+
+.ecc-tool-card__action:focus-visible {
+  outline: 3px solid var(--brand);
+  outline-offset: 3px;
+  background: var(--brand);
+}
+
+.ecc-tool-card__action[aria-disabled="true"],
+.ecc-tool-card__action:disabled {
+  background: var(--border-strong);
+  color: var(--ink-muted);
+  cursor: not-allowed;
+  pointer-events: none;
+  border-color: transparent;
+}
+
+.ecc-tool-card__action[aria-current="true"],
+.ecc-tool-card__action[aria-current="page"] {
+  background: var(--brand-hover);
+  border-color: var(--border-strong);
+  color: var(--surface);
+}
+
+/* ── Detail body ─────────────────────────────────────────────────── */
+.ecc-dash__detail-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.ecc-dash__detail-body p {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: var(--leading-body);
+  margin: 0;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.ecc-dash__detail-body strong {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+/* ── Forced colors (Windows High Contrast) ───────────────────────── */
+@media (forced-colors: active) {
+  .ecc-tool-card {
+    border: 2px solid ButtonText;
+    forced-color-adjust: none;
+    background: Canvas;
+  }
+
+  .ecc-tool-card__title,
+  .ecc-tool-card__description,
+  .ecc-dash__title,
+  .ecc-dash__subtitle {
+    color: CanvasText;
+  }
+
+  .ecc-tool-card__icon {
+    color: ButtonText;
+  }
+
+  .ecc-tool-card__status--success,
+  .ecc-tool-card__status--preview {
+    forced-color-adjust: none;
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+
+  .ecc-tool-card__action {
+    forced-color-adjust: none;
+    background: ButtonFace;
+    color: ButtonText;
+    border: 2px solid ButtonText;
+  }
+
+  .ecc-tool-card__action:hover,
+  .ecc-tool-card__action:focus-visible {
+    background: Highlight;
+    color: HighlightText;
+    border-color: Highlight;
+  }
+
+  .ecc-tool-card__action[aria-disabled="true"],
+  .ecc-tool-card__action:disabled {
+    background: GrayText;
+    color: Canvas;
+    border-color: GrayText;
+  }
+
+  .ecc-dash__metric {
+    border: 1px solid ButtonText;
+    background: Canvas;
+  }
+
+  .ecc-dash-section__rule {
+    border-block-start-color: ButtonText;
+  }
+}
