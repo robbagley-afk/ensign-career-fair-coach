@@ -17,13 +17,13 @@ body.admin-body {
   color: var(--ink);
   font-family: "Montserrat", system-ui, sans-serif;
   margin: 0;
-  padding: 24px 16px;
+  padding: 24px var(--gutter);
   min-height: 100vh;
   box-sizing: border-box;
 }
 
 .admin-shell {
-  max-width: 1000px;
+  max-width: none;
   margin: 0 auto;
 }
 

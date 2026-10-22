@@ -1,0 +1,10 @@
+name: ECC audit
+on: [pull_request, push]
+permissions:
+  contents: read
+jobs:
+  ecc-audit:
+    uses: robbagley-afk/ensign-design-system/.github/workflows/ecc-audit-reusable.yml@fdcee86079b64c4e7b1e2be2c9c96d21e5b527f0
+    with:
+      audit-path: .
+      design-system-ref: fdcee86079b64c4e7b1e2be2c9c96d21e5b527f0
