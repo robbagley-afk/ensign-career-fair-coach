@@ -82,6 +82,28 @@
   --input-fill: #f1f5f9;  /* rob-decision */
   --gutter: clamp(24px, 3vw, 56px);  /* exemplar */
   --sidebar-width: 232px;  /* exemplar */
+  --surface-sunken: #F3F6F4;  /* rob-decision */
+  --brand-deep: #00382A;  /* rob-decision */
+  --brand-tint-strong: #C7E4D3;  /* rob-decision */
+  --info: #1E40AF;  /* rob-decision */
+  --info-tint: #E8EEFC;  /* rob-decision */
+  --ai: #5B21B6;  /* rob-decision */
+  --ai-tint: #F1EAFE;  /* rob-decision */
+  --ai-border: #7C3AED;  /* rob-decision */
+  --caution-text: #6B3E00;  /* rob-decision */
+  --caution-bg: #FFF1D6;  /* rob-decision */
+  --caution-border: #B26B00;  /* rob-decision */
+  --danger: #B42318;  /* rob-decision */
+  --danger-bg: #FDECEA;  /* rob-decision */
+  --text-body: 20px;  /* rob-decision */
+  --text-item: 22px;  /* rob-decision */
+  --text-field: 21px;  /* rob-decision */
+  --text-button: 20px;  /* rob-decision */
+  --text-section: 26px;  /* rob-decision */
+  --text-title: 30px;  /* rob-decision */
+  --text-display: 36px;  /* rob-decision */
+  --control-height: 56px;  /* rob-decision */
+  --target-min: 48px;  /* rob-decision */
 
   /* fixed rules from the design system README */
   --touch-min: 44px;

@@ -25,6 +25,8 @@ html, body {
   color: var(--ink);
 }
 
+body { font-size: var(--text-body); } /* ECC v2: body copy inherits 20px (html stays 16px so rem sizes do not move) */
+
 .app-container {
   display: flex;
   flex-direction: column;
@@ -646,8 +648,8 @@ html, body {
 
 textarea#message-input {
   flex: 1;
-  height: 58px; /* 19px x 1.35 line + 28px padding + 4px border; app.js resets to this */
-  min-height: 58px;
+  height: 59px; /* 20px x 1.35 line + 28px padding + 4px border (ECC v2); app.js resets to this */
+  min-height: 59px;
   max-height: 90px;
   padding: 14px 18px;
   border: 2px solid var(--input-border);
