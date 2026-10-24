@@ -529,3 +529,207 @@ input.ecc-field { border-radius: var(--radius-md); resize: none; } /* single-lin
     border-block-start-color: ButtonText;
   }
 }
+
+/* ==========================================================================
+   ECC v2: step screens for desktop monitors (ENS 101 Guide pattern, 2026-10-23)
+   Color has one job each: brand = do this, brand-deep = where you are,
+   accent-gold = identity only, info = Civitas and outside records,
+   ai = Mentor AI, caution = be careful, danger = cannot be undone.
+   ========================================================================== */
+
+/* ---------- Header band: deep green, gold identity stripe ---------- */
+.ecc-hdr-band {
+  background: var(--brand-deep);
+  color: #fff;
+  border-bottom: 5px solid var(--accent-gold);
+}
+.ecc-hdr-band__inner { display: flex; align-items: center; gap: var(--space-7); padding: var(--space-3) var(--gutter); min-width: 0; }
+.ecc-hdr-band__sub { font-size: var(--text-caption); color: var(--brand-tint-strong); font-weight: 500; }
+.ecc-nav-link {
+  display: inline-flex; align-items: center; min-height: var(--target-min);
+  padding: var(--space-2) var(--space-1);
+  color: var(--brand-tint); font-size: var(--text-button); font-weight: 700; text-decoration: none;
+  border-bottom: 4px solid transparent;
+}
+.ecc-nav-link:hover { color: #fff; border-bottom-color: var(--brand-tint-strong); }
+.ecc-nav-link[aria-current="page"] { color: #fff; border-bottom-color: var(--accent-gold); }
+.ecc-hdr-band :focus-visible { outline: 3px solid var(--accent-gold); outline-offset: 3px; }
+
+/* ---------- Buttons: larger size and the v2 role colors ---------- */
+.ecc-btn--lg { min-height: var(--control-height); padding: var(--space-3) 26px; font-size: var(--text-button); font-weight: 700; border-width: 2px; gap: 10px; }
+.ecc-btn--lg svg { width: 24px; height: 24px; flex: none; }
+.ecc-btn-secondary.ecc-btn--lg { color: var(--brand); }
+.ecc-btn-secondary.ecc-btn--lg:hover { background: var(--brand-tint); color: var(--brand-hover); }
+.ecc-btn-ai { background: var(--ai); border-color: var(--ai); color: #fff; }
+.ecc-btn-ai:hover { background: #4c1d95; border-color: #4c1d95; }
+.ecc-btn-info { background: var(--info); border-color: var(--info); color: #fff; }
+.ecc-btn-info:hover { background: #1e3a8a; border-color: #1e3a8a; }
+.ecc-btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.ecc-btn-danger:hover { background: #912018; border-color: #912018; }
+.ecc-btn--lg:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+.ecc-hdr-band .ecc-btn--lg:focus-visible { outline-color: var(--accent-gold); } /* brand green on brand-deep is 1.87:1; gold is the band's ring */
+.ecc-btn--lg:disabled,
+.ecc-btn--lg[aria-disabled="true"] { background: #e2e8f0; border-color: #94a3b8; color: var(--ink-muted); cursor: not-allowed; }
+
+/* ---------- Stepper: one strip under the header ---------- */
+.ecc-stepper { background: var(--brand-tint); border-bottom: 1px solid var(--brand-tint-strong); padding: 10px var(--gutter); }
+.ecc-stepper ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; min-width: 0; }
+.ecc-stepper__step { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) 18px var(--space-2) 10px; border-radius: var(--radius-pill); border: 2px solid transparent; min-width: 0; }
+.ecc-stepper__badge { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-content: center; font-size: 19px; font-weight: 800; }
+.ecc-stepper__name { display: block; font-size: 19px; font-weight: 700; line-height: 1.25; }
+.ecc-stepper__state { font-size: var(--text-caption); font-weight: 600; color: var(--ink-muted); }
+.ecc-stepper__step.is-done .ecc-stepper__badge { background: var(--brand); color: #fff; }
+.ecc-stepper__step.is-current,
+.ecc-stepper__step[aria-current="step"] { background: var(--surface); border-color: var(--brand); }
+.ecc-stepper__step[aria-current="step"] .ecc-stepper__badge { background: var(--brand-deep); color: #fff; box-shadow: 0 0 0 3px var(--accent-gold); }
+.ecc-stepper__step[aria-current="step"] .ecc-stepper__state { color: var(--brand-hover); }
+.ecc-stepper__step.is-next .ecc-stepper__badge { background: var(--surface); color: var(--ink-muted); border: 3px solid var(--border-strong); }
+.ecc-stepper__line { flex: 1 1 24px; min-width: 16px; max-width: 80px; height: 3px; background: var(--brand-tint-strong); }
+
+/* ---------- Desktop step layout: rail | work | record ---------- */
+.ecc-step-layout {
+  display: grid;
+  grid-template-columns: minmax(270px, 320px) minmax(0, 1.5fr) minmax(440px, 1fr);
+  gap: 28px;
+  align-items: start;
+  padding: var(--space-6) var(--gutter) 28px;
+  min-width: 0;
+}
+.ecc-step-layout--two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.ecc-step-layout > * { min-width: 0; }
+.ecc-step-title { margin: var(--space-1) 0 0; font-size: var(--text-display); line-height: 1.15; font-weight: 800; }
+.ecc-step-eyebrow { margin: 0; font-size: 18px; font-weight: 700; color: var(--brand-hover); }
+.ecc-group-label { margin: 0; font-size: var(--text-eyebrow); font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brand-hover); }
+
+/* ---------- Checklist row: the whole row is the target ---------- */
+.ecc-task { display: flex; gap: 18px; align-items: flex-start; padding: var(--space-4) var(--space-5); border: 2px solid var(--border); border-radius: 12px; background: var(--surface); cursor: pointer; }
+.ecc-task:hover { border-color: var(--brand); background: var(--brand-tint-soft); }
+.ecc-task.is-done { background: var(--brand-tint); border-color: var(--brand-tint-strong); }
+.ecc-task__check { appearance: none; -webkit-appearance: none; flex: none; width: 44px; height: 44px; margin: 0; border: 3px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface); display: grid; place-content: center; cursor: pointer; }
+.ecc-task__check:checked { background: var(--brand); border-color: var(--brand); }
+.ecc-task__check:checked::after { content: ""; width: 19px; height: 10px; border-left: 5px solid #fff; border-bottom: 5px solid #fff; transform: translateY(-2px) rotate(-45deg); }
+.ecc-task__check:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+.ecc-task__title { font-size: var(--text-item); font-weight: 700; line-height: 1.35; }
+.ecc-task__detail { display: block; margin-top: var(--space-1); color: var(--ink-muted); }
+.ecc-pill-done { display: inline-flex; padding: 3px 14px; border-radius: var(--radius-pill); background: var(--brand); color: #fff; font-size: var(--text-caption); font-weight: 700; white-space: nowrap; }
+.ecc-pill-todo { display: inline-flex; padding: 3px 14px; border-radius: var(--radius-pill); background: var(--surface); color: var(--ink-muted); border: 2px solid var(--border); font-size: var(--text-caption); font-weight: 700; white-space: nowrap; }
+
+/* ---------- Number picker: replaces drag sliders ---------- */
+.ecc-numpick { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: var(--space-2); }
+.ecc-numpick__key { min-height: 58px; border-radius: var(--radius-md); border: 2px solid var(--border-strong); background: var(--surface); color: var(--ink); font: inherit; font-size: 23px; font-weight: 800; line-height: 1.05; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.ecc-numpick__key small { font-size: var(--text-caption); font-weight: 600; }
+.ecc-numpick__key:hover { border-color: var(--brand); background: var(--brand-tint); }
+.ecc-numpick__key[aria-pressed="true"] { background: var(--brand-deep); border-color: var(--brand-deep); color: #fff; }
+.ecc-numpick__key:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+
+/* ---------- Choice card: large radio button ---------- */
+.ecc-choice-row { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.ecc-choice { flex: 1 1 240px; min-width: 0; overflow-wrap: anywhere; display: flex; align-items: center; gap: var(--space-3); min-height: 58px; padding: 10px var(--space-4); border-radius: var(--radius-md); border: 2px solid var(--border-strong); background: var(--surface); color: var(--ink); font: inherit; font-size: 19px; font-weight: 700; text-align: left; cursor: pointer; }
+.ecc-choice::before { content: ""; flex: none; width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--border-strong); background: var(--surface); box-sizing: border-box; }
+.ecc-choice:hover { border-color: var(--brand); background: var(--brand-tint); }
+.ecc-choice[aria-checked="true"] { border-color: var(--brand); background: var(--brand-tint); box-shadow: inset 0 0 0 2px var(--brand); }
+.ecc-choice[aria-checked="true"]::before { border: 8px solid var(--brand); }
+.ecc-choice:focus-visible { outline: 3px solid var(--brand); outline-offset: 3px; }
+
+/* ---------- Callouts: tint + border + bold lead word, never color alone ---------- */
+.ecc-callout { display: flex; gap: var(--space-3); align-items: flex-start; padding: var(--space-3) var(--space-4); border: 2px solid; border-radius: var(--radius-md); color: var(--ink); }
+.ecc-callout svg { flex: none; width: 26px; height: 26px; }
+.ecc-callout__lead { font-weight: 800; }
+.ecc-callout--caution { background: var(--caution-bg); border-color: var(--caution-border); }
+.ecc-callout--caution .ecc-callout__lead, .ecc-callout--caution svg { color: var(--caution-text); }
+.ecc-callout--info { background: var(--info-tint); border-color: var(--info); }
+.ecc-callout--info .ecc-callout__lead, .ecc-callout--info svg { color: var(--info); }
+.ecc-callout--success { background: var(--brand-tint); border-color: var(--brand); }
+.ecc-callout--success .ecc-callout__lead, .ecc-callout--success svg { color: var(--brand-hover); }
+.ecc-callout--danger { background: var(--danger-bg); border-color: var(--danger); }
+.ecc-callout--danger .ecc-callout__lead, .ecc-callout--danger svg { color: var(--danger); }
+
+/* ---------- Feature card: the one field that matters most on a screen ---------- */
+.ecc-feature-card { background: var(--surface); border: 2px solid var(--brand); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); }
+.ecc-feature-card__head { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4) 26px; background: var(--brand); color: #fff; }
+.ecc-feature-card__head h2 { margin: 0; font-size: var(--text-section); font-weight: 800; line-height: 1.2; }
+.ecc-feature-card__body { padding: var(--space-5) 26px var(--space-6); display: flex; flex-direction: column; gap: var(--space-4); }
+.ecc-feature-card--info { border-color: var(--info); }
+.ecc-feature-card--info .ecc-feature-card__head { background: var(--info); }
+.ecc-field--lg { flex: none; width: 100%; box-sizing: border-box; font-size: var(--text-field); line-height: 1.55; min-height: var(--control-height); } /* flex: none so a column parent never stretches a single-line input to the 240px basis */
+textarea.ecc-field--lg { min-height: 210px; resize: vertical; }
+
+/* ---------- Mentor AI prompt buttons ---------- */
+.ecc-ai-panel { background: var(--ai-tint); border: 1px solid var(--ai-border); border-radius: var(--radius-lg); padding: 22px var(--space-6); }
+.ecc-ai-panel h2 { margin: 0; color: var(--ai); font-size: 21px; font-weight: 800; }
+.ecc-ai-ask { display: flex; align-items: center; width: 100%; min-height: 52px; padding: var(--space-2) 14px; border: 2px solid var(--ai-border); border-radius: var(--radius-md); background: var(--surface); color: var(--ink); font: inherit; font-size: 18px; font-weight: 600; text-align: left; cursor: pointer; }
+.ecc-ai-ask:hover { background: #faf7ff; border-color: var(--ai); }
+.ecc-ai-ask:focus-visible { outline: 3px solid var(--ai); outline-offset: 3px; }
+
+/* ---------- Action bar: Back, progress, one green Next. Stays on screen ---------- */
+.ecc-actionbar { position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; gap: 28px; padding: 14px var(--gutter); background: var(--surface); border-top: 2px solid var(--border); box-shadow: 0 -4px 14px rgba(15,23,42,0.08); }
+.ecc-actionbar__progress { flex: 1; display: flex; align-items: center; justify-content: center; gap: 18px; font-size: var(--text-button); font-weight: 800; }
+.ecc-progress { flex: 0 1 420px; height: 14px; border-radius: var(--radius-pill); background: #e2e8f0; overflow: hidden; }
+.ecc-progress > span { display: block; height: 100%; background: var(--brand); border-radius: inherit; }
+
+/* ---------- v2 chat composer: modifier on .ecc-composer, so it outranks `.ecc-composer textarea` ---------- */
+/* textarea.ecc-field--lg is a 210px note field. Chat uses this instead: one 56px line that grows with typing. */
+.ecc-composer--v2 { gap: var(--space-3); padding-block: var(--space-4) var(--space-5); }
+.ecc-composer--v2 textarea {
+  box-sizing: border-box;
+  min-height: var(--control-height);
+  max-height: 40vh; /* grows to here, then scrolls inside; overscroll stays auto so the page keeps the wheel */
+  padding: 11px 18px; /* 21px x 1.4 line + 22px padding + 4px border = 55.4px, so min-height sets 56px */
+  font-size: var(--text-field);
+  line-height: 1.4;
+  overflow-y: auto;
+  resize: none;
+  field-sizing: content; /* Chromium grows the field with its text; other browsers keep 56px and scroll */
+}
+.ecc-composer--v2 .ecc-btn { min-height: var(--control-height); padding: var(--space-3) 26px; font-size: var(--text-button); font-weight: 700; border-width: 2px; }
+
+/* ---------- Light sidebar nav: .ecc-nav-link is for the dark header band only ---------- */
+.ecc-side-nav { display: flex; flex-direction: column; gap: var(--space-1); min-width: 0; margin-inline: calc(-1 * var(--space-2)); } /* links use 8px of the sidebar padding so 20px labels fit the 232px rail */
+.ecc-side-link {
+  display: flex; align-items: center; gap: var(--space-3);
+  min-height: var(--target-min);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  border-left: 4px solid transparent;
+  color: var(--ink); font-size: var(--text-body); font-weight: 600; line-height: 1.3; text-decoration: none;
+  overflow-wrap: anywhere; min-width: 0;
+}
+.ecc-side-link svg { flex: none; width: 22px; height: 22px; }
+.ecc-side-link:hover { background: var(--brand-tint-soft); color: var(--brand-hover); }
+.ecc-side-link:active { background: var(--brand-tint); }
+/* where you are: tint + brand-deep bar + bold, never color alone */
+.ecc-side-link[aria-current="page"],
+.ecc-side-link[aria-selected="true"] { background: var(--brand-tint); border-left-color: var(--brand-deep); color: var(--brand-deep); font-weight: 700; }
+.ecc-side-link:focus-visible { outline: 3px solid var(--brand); outline-offset: 2px; }
+.ecc-side-link[aria-disabled="true"] { color: var(--ink-muted); pointer-events: none; }
+
+/* ---------- v2 breakpoints: desktop first, never a phone-width default ---------- */
+@media (max-width: 1600px) {
+  /* ECC: keys stay at least 44px wide when the work column narrows */
+  .ecc-numpick { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+@media (max-width: 1180px) {
+  .ecc-step-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .ecc-step-layout > .ecc-step-rail { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+  .ecc-stepper ol { flex-wrap: wrap; }
+  .ecc-stepper__line { display: none; }
+}
+@media (max-width: 820px) {
+  .ecc-step-layout, .ecc-step-layout--two { grid-template-columns: minmax(0, 1fr); }
+  .ecc-step-layout > .ecc-step-rail { grid-template-columns: minmax(0, 1fr); }
+  .ecc-hdr-band__inner { flex-wrap: wrap; gap: var(--space-4); }
+  .ecc-actionbar { flex-wrap: wrap; gap: var(--space-3); }
+}
+@media (max-width: 640px) {
+  .ecc-numpick { grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ecc-task, .ecc-numpick__key, .ecc-choice, .ecc-ai-ask, .ecc-btn--lg { transition: background-color 0.15s, border-color 0.15s; }
+}
+@media (forced-colors: active) {
+  .ecc-task, .ecc-task__check, .ecc-numpick__key, .ecc-choice, .ecc-callout, .ecc-ai-ask { border-color: ButtonText; }
+  .ecc-numpick__key[aria-pressed="true"], .ecc-choice[aria-checked="true"] { forced-color-adjust: none; background: Highlight; color: HighlightText; border-color: Highlight; }
+  .ecc-task__check:focus-visible, .ecc-numpick__key:focus-visible, .ecc-choice:focus-visible, .ecc-ai-ask:focus-visible, .ecc-btn--lg:focus-visible { outline-color: Highlight; }
+  .ecc-side-link[aria-current="page"], .ecc-side-link[aria-selected="true"] { border-left-color: Highlight; }
+  .ecc-side-link:focus-visible { outline-color: Highlight; }
+}
